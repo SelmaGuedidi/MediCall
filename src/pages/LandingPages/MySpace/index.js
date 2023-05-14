@@ -11,7 +11,9 @@ import {
 } from "@material-ui/core";
 import DefaultNavbar from "../../../examples/Navbars/DefaultNavbar";
 import routesNavbar from "../../../routesNavbar";
+import bgImage from "../../../assets/images/bgimage.jpg";
 import MKBox from "../../../components/MKBox";
+
 const useStyles = makeStyles((theme) => ({
   paper: {
     padding: theme.spacing(2),
@@ -36,12 +38,22 @@ function NotificationCenter() {
 
   return (
     <>
-      <MKBox position="fixed" top="0.5rem" width="100%">
-        <DefaultNavbar routes={routesNavbar} />
-      </MKBox>
-      <MKBox my={12} py={6} width="100%">
-        <Grid>
-          <Grid container item xs={12} lg={6} flexDirection="column" alignItems="left">
+      <DefaultNavbar routes={routesNavbar} />
+      <MKBox
+        minHeight="75vh"
+        width="100%"
+        sx={{
+          backgroundImage: `url(${bgImage})`,
+          height: 10,
+          backgroundSize: "1500px 800px",
+          backgroundPosition: "top",
+          backgroundRepeat: "no-repeat",
+          display: "grid",
+          placeItems: "center",
+        }}
+      >
+        <Grid container spacing={0}>
+          <Grid item xs={4} style={{ marginLeft: "120px" }}>
             <Paper className={classes.paper}>
               <Typography variant="h6">Appointments</Typography>
               <Divider />
@@ -62,24 +74,24 @@ function NotificationCenter() {
               </List>
             </Paper>
           </Grid>
-        </Grid>
-      </MKBox>
-      <MKBox component="section">
-        <Grid item xs={30}>
-          {selectedAppointment ? (
-            <Paper className={classes.paper}>
-              <Typography variant="h6">
-                Appointment Details for {selectedAppointment.date}
-              </Typography>
-              <Divider />
-              <Typography variant="subtitle1">Time: {selectedAppointment.time}</Typography>
-              <Typography variant="subtitle1">Location: {selectedAppointment.location}</Typography>
-            </Paper>
-          ) : (
-            <Paper className={classes.paper}>
-              <Typography variant="h6">No appointment selected</Typography>
-            </Paper>
-          )}
+          <Grid item xs={5}>
+            {selectedAppointment ? (
+              <Paper className={classes.paper}>
+                <Typography variant="h6">
+                  Appointment Details for {selectedAppointment.date}
+                </Typography>
+                <Divider />
+                <Typography variant="subtitle1">Time: {selectedAppointment.time}</Typography>
+                <Typography variant="subtitle1">
+                  Location: {selectedAppointment.location}
+                </Typography>
+              </Paper>
+            ) : (
+              <Paper className={classes.paper}>
+                <Typography variant="h6">No appointment selected</Typography>
+              </Paper>
+            )}
+          </Grid>
         </Grid>
       </MKBox>
     </>

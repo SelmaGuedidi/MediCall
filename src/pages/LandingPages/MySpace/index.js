@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import {
   List,
   ListItem,
@@ -11,6 +11,8 @@ import {
 } from "@material-ui/core";
 import DefaultNavbar from "../../../examples/Navbars/DefaultNavbar";
 import routesNavbar from "../../../routesNavbar";
+import MKButton from "../../../components/MKButton";
+import Icon from "@mui/material/Icon";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -26,7 +28,7 @@ const appointments = [
   { id: 3, date: "2023-05-14", time: "4:00 PM", location: "Chicago" },
 ];
 
-function NotificationCenter() {
+function MySpace() {
   const classes = useStyles();
   const [selectedAppointment, setSelectedAppointment] = useState(null);
 
@@ -68,6 +70,16 @@ function NotificationCenter() {
               <Divider />
               <Typography variant="subtitle1">Time: {selectedAppointment.time}</Typography>
               <Typography variant="subtitle1">Location: {selectedAppointment.location}</Typography>
+              <MKButton
+                type="submit"
+                variant="gradient"
+                color="info"
+                onClick={() =>
+                  window.location.replace("http://localhost:3000/pages/landing-pages/agora")
+                }
+              >
+                <Icon> phone</Icon>
+              </MKButton>
             </Paper>
           ) : (
             <Paper className={classes.paper}>
@@ -80,4 +92,4 @@ function NotificationCenter() {
   );
 }
 
-export default NotificationCenter;
+export default MySpace;

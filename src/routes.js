@@ -54,6 +54,7 @@ import MakeAnAppointment from "./pages/LandingPages/MakeAnAppointment";
 import SignUp from "./pages/LandingPages/SignUp";
 import Profile from "./pages/LandingPages/Profile";
 import NotificationCenter from "./pages/LandingPages/MySpace";
+import Agora from "./pages/LandingPages/Agora";
 
 import RequestAppointment from "./pages/LandingPages/RequestAppointment";
 import SignOut from "./layouts/pages/authentication/sign-out";
@@ -121,6 +122,11 @@ const routes = [
         name: "profile",
         route: "/pages/landing-pages/profile",
         component: <Profile />,
+      },
+      {
+        name: "agora",
+        route: "/pages/landing-pages/agora",
+        component: <Agora />,
       },
     ],
   },

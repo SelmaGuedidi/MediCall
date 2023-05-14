@@ -12,6 +12,7 @@ import {
 import DefaultNavbar from "../../../examples/Navbars/DefaultNavbar";
 import routesNavbar from "../../../routesNavbar";
 import { AcceptButton, DeclineButton } from "../../../components/AcceptDeclineButton";
+import axios from "axios";
 const useStyles = makeStyles((theme) => ({
   paper: {
     padding: theme.spacing(2),
@@ -20,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const appointments = [
+let appointments = [
   {
     id: 1,
     date: "2023-05-12",
@@ -48,10 +49,56 @@ function RequestAppointment() {
 
   const handleAcceptButtonClick = () => {
     // Handle accepting the request here
+
+    const selectedDate = window.prompt("Select date (YYYY-MM-DD):");
+    const selectedTime = window.prompt("Select time (HH:MM):");
+
+    const regexPattern = new RegExp("^\\d{4}\\-(0?[1-9]|1[012])\\-(0?[1-9]|[12][0-9]|3[01])$");
+
+    const regexPattern1 = new RegExp("^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$");
+
+    const validdate = regexPattern.test(selectedDate);
+    const validTime = regexPattern1.test(selectedTime);
+    if (!selectedDate || !selectedTime || !validdate || !validTime) {
+      return;
+    }
+
+    const updatedAppointment = { ...selectedAppointment, selectedDate, selectedTime };
+
+    appointments = appointments.filter((appointment) => appointment.id !== selectedAppointment.id);
+
+    axios
+      .put(`/api/appointments/${selectedAppointment.id}`, updatedAppointment)
+      .then((response) => {
+        // Handle the response here
+        console.log(response);
+      })
+      .catch((error) => {
+        // Handle errors here
+        console.log(error);
+      });
+
+    setSelectedAppointment(null);
   };
 
   const handleDeclineButtonClick = () => {
-    // Handle declining the request here
+    // Filter out the selected appointment from the appointments array
+    appointments = appointments.filter((appointment) => appointment.id !== selectedAppointment.id);
+
+    // Send a DELETE request to the backend to delete the request
+    axios
+      .delete(`/api/appointments/${selectedAppointment.id}`)
+      .then((response) => {
+        // Handle the response here
+        console.log(response);
+      })
+      .catch((error) => {
+        // Handle errors here
+        console.log(error);
+      });
+
+    // Deselect the selected appointment
+    setSelectedAppointment(null);
   };
   return (
     <>

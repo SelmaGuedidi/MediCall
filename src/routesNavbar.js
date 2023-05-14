@@ -43,17 +43,15 @@ const routesNavbar = [
       },
     ].filter(Boolean),
   },
+
   {
-    name: "Appointments",
+    name: role === "doctor" ? "Appointment requests" : "Make an Appointment",
     icon: <Icon> person</Icon>,
-    route: "/pages/landing-pages/MakeAnAppointment",
-    component: <MakeAnAppointment />,
-  },
-  role === "doctor" && {
-    name: "Appointment requests",
-    icon: <Icon>appointment </Icon>,
-    route: "/pages/landing-pages/RequestAppointment",
-    component: <RequestAppointment />,
+    route:
+      role === "doctor"
+        ? "/pages/landing-pages/RequestAppointment"
+        : "/pages/landing-pages/MakeAnAppointment",
+    component: role === "doctor" ? <RequestAppointment /> : <MakeAnAppointment />,
   },
 
   {

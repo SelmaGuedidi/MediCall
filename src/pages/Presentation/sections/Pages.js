@@ -81,7 +81,7 @@ function Pages() {
                 Presentation Pages for Company, Landing Pages, Blogs and Support
               </MKTypography>
               <MKTypography variant="body2" fontWeight="regular" color="secondary" mb={1} pr={2}>
-                These is just a small selection of the multiple possibitilies you have. Focus on the
+                These is just a small selection of the multiple possibilities you have. Focus on the
                 business, not on the design.
               </MKTypography>
             </MKBox>

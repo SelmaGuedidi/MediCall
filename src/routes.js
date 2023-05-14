@@ -55,6 +55,9 @@ import SignUp from "./pages/LandingPages/SignUp";
 import Profile from "./pages/LandingPages/Profile";
 import NotificationCenter from "./pages/LandingPages/MySpace";
 
+import RequestAppointment from "./pages/LandingPages/RequestAppointment";
+import SignOut from "./layouts/pages/authentication/sign-out";
+
 const routes = [
   {
     name: "account",
@@ -67,8 +70,13 @@ const routes = [
       },
       {
         name: "sign up",
-        route: "/pages/authentication/sign-un",
+        route: "/pages/authentication/sign-up",
         component: <SignUp />,
+      },
+      {
+        name: "sign out",
+        route: "/pages/authentication/sign-out",
+        component: <SignOut />,
       },
     ],
   },
@@ -77,6 +85,12 @@ const routes = [
     icon: <Icon> person</Icon>,
     route: "/pages/landing-pages/MakeAnAppointment",
     component: <MakeAnAppointment />,
+  },
+  {
+    name: "Appointment requests",
+    icon: <Icon> person</Icon>,
+    route: "/pages/landing-pages/RequestAppointment",
+    component: <RequestAppointment />,
   },
   {
     name: "My Space",

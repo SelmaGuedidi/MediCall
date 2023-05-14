@@ -35,7 +35,7 @@ const SignUpBasic = () => {
       // const token1 =
       //   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c";
       //Cookies.set("jwt_token", token1);
-      Cookies.set("user_id","123");
+      Cookies.set("user_id", "123");
       //console.error(error);
     }
   };

@@ -37,17 +37,7 @@ import routesNavbar from "../../../routesNavbar";
 function Author() {
   return (
     <>
-      <DefaultNavbar
-        routes={routesNavbar}
-        action={{
-          type: "external",
-          route: "https://www.creative-tim.com/product/material-kit-react",
-          label: "free download",
-          color: "info",
-        }}
-        transparent
-        light
-      />
+      <DefaultNavbar routes={routesNavbar} transparent light />
       <MKBox bgColor="white">
         <MKBox
           minHeight="25rem"

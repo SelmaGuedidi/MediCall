@@ -41,7 +41,7 @@ const SignUpBasic = () => {
       .post("myurl", { formData })
       .then((response) => {
         console.log(response);
-        //window.location.replace("http://localhost:3000/presentation");
+        window.location.replace("http://localhost:3000/pages/authentication/sign-up");
       })
       .catch((err) => {
         console.log(formData);
@@ -250,7 +250,7 @@ const SignUpBasic = () => {
             Already have an account?{" "}
             <MKTypography
               component={Link}
-              to="/pages/authentication/sign-in"
+              to="/pages/authentication/sign-up"
               variant="button"
               color="info"
               fontWeight="medium"

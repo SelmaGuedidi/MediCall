@@ -12,27 +12,32 @@ import GitHubIcon from "@mui/icons-material/GitHub";
 import GoogleIcon from "@mui/icons-material/Google";
 import axios from "axios";
 import routesNavbar from "../../../routesNavbar";
+import Cookies from "js-cookie";
+
 const SignUpBasic = () => {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log(formData);
-    // Send form data using POST request
-    axios
-      .post("myurl", { formData })
-      .then((response) => {
-        console.log(response);
-        //window.location.replace("http://localhost:3000/presentation");
-      })
-      .catch((err) => {
-        console.log(formData);
-        console.log(err);
-        //window.location.replace("http://localhost:3000/presentation");
+  const handleSubmit = async (email, password) => {
+    try {
+      const response = await axios.post("/api/authenticate", {
+        email,
+        password,
       });
+
+      const { token } = response.data;
+      Cookies.set("jwt_token", token);
+
+      return token;
+    } catch (error) {
+      // const token1 =
+      //   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c";
+      //Cookies.set("jwt_token", token1);
+      Cookies.set("user_id","123");
+      //console.error(error);
+    }
   };
 
   const handleChange = (e) => {

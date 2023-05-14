@@ -22,6 +22,7 @@ import GitHubIcon from "@mui/icons-material/GitHub";
 import GoogleIcon from "@mui/icons-material/Google";
 import axios from "axios";
 import routesNavbar from "../../../routesNavbar";
+import Cookies from "js-cookie";
 const SignUpBasic = () => {
   const [formData, setFormData] = useState({
     name: "",
@@ -46,6 +47,7 @@ const SignUpBasic = () => {
       .catch((err) => {
         console.log(formData);
         console.log(err);
+        window.location.replace("http://localhost:3000/pages/authentication/sign-in");
         //window.location.replace("http://localhost:3000/presentation");
       });
   };
@@ -54,6 +56,11 @@ const SignUpBasic = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  const isAuthenticated = Cookies.get("authenticated");
+  if (isAuthenticated) {
+    window.location.replace("http://localhost:3000/presentation");
+    return null;
+  }
   return (
     <>
       <DefaultNavbar

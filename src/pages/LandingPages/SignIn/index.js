@@ -14,7 +14,7 @@ import axios from "axios";
 import routesNavbar from "../../../routesNavbar";
 import Cookies from "js-cookie";
 
-const SignUpBasic = () => {
+const SignInBasic = () => {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -36,6 +36,9 @@ const SignUpBasic = () => {
       //   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c";
       //Cookies.set("jwt_token", token1);
       Cookies.set("user_id", "123");
+      Cookies.set("authenticated", true);
+      Cookies.set("role", "doctor");
+      window.location.replace("http://localhost:3000/presentation");
       //console.error(error);
     }
   };
@@ -43,7 +46,11 @@ const SignUpBasic = () => {
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
-
+  const isAuthenticated = Cookies.get("authenticated");
+  if (isAuthenticated) {
+    window.location.replace("http://localhost:3000/presentation");
+    return null;
+  }
   return (
     <>
       <DefaultNavbar routes={routesNavbar} transparent light />
@@ -168,4 +175,4 @@ const SignUpBasic = () => {
   );
 };
 
-export default SignUpBasic;
+export default SignInBasic;

@@ -42,8 +42,8 @@ import DefaultNavbarMobile from "examples/Navbars/DefaultNavbar/DefaultNavbarMob
 
 // Material Kit 2 React base styles
 import breakpoints from "assets/theme/base/breakpoints";
-
-function DefaultNavbar({ brand, routes, transparent, light, action, sticky, relative, center }) {
+import medical from "assets/images/medicall.png";
+function DefaultNavbar({ routes, transparent, light, action, sticky, relative, center }) {
   const [dropdown, setDropdown] = useState("");
   const [dropdownEl, setDropdownEl] = useState("");
   const [dropdownName, setDropdownName] = useState("");
@@ -81,10 +81,11 @@ function DefaultNavbar({ brand, routes, transparent, light, action, sticky, rela
     return () => window.removeEventListener("resize", displayMobileNavbar);
   }, []);
 
-  const renderNavbarItems = routes.map(({ name, icon, href, route, collapse }) => (
+  const renderNavbarItems = routes.map(({ name, backgroundImage, icon, href, route, collapse }) => (
     <DefaultNavbarDropdown
       key={name}
       name={name}
+      backgroundImage={backgroundImage}
       icon={icon}
       href={href}
       route={route}
@@ -477,7 +478,7 @@ function DefaultNavbar({ brand, routes, transparent, light, action, sticky, rela
             pl={relative || transparent ? 0 : { xs: 0, lg: 1 }}
           >
             <MKTypography variant="button" fontWeight="bold" color={light ? "white" : "dark"}>
-              {brand}
+              <img src={medical} height={60} width={70} alt="image" />
             </MKTypography>
           </MKBox>
           <MKBox
@@ -551,7 +552,8 @@ function DefaultNavbar({ brand, routes, transparent, light, action, sticky, rela
 
 // Setting default values for the props of DefaultNavbar
 DefaultNavbar.defaultProps = {
-  brand: "Material Kit 2",
+  brand: "MediCall",
+  backgroundImage: "assets/images/medicall.png",
   transparent: false,
   light: false,
   action: false,

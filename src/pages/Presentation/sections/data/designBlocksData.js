@@ -18,14 +18,13 @@ const imagesPrefix =
 
 export default [
   {
-    title: "Design Blocks",
-    description: "A selection of 45 page sections that fit perfectly in any combination",
+    title: "Generalists",
     items: [
       {
         image: `${imagesPrefix}/headers.jpg`,
         name: "Page Headers",
         count: 10,
-        route: "/sections/page-sections/page-headers",
+        route: "/pages/landing-pages/Profile",
       },
       {
         image: `${imagesPrefix}/features.jpg`,
@@ -108,8 +107,7 @@ export default [
     ],
   },
   {
-    title: "Navigation",
-    description: "30+ components that will help go through the pages",
+    title: "Cardiologists",
     items: [
       {
         image: `${imagesPrefix}/navbars.jpg`,
@@ -132,8 +130,7 @@ export default [
     ],
   },
   {
-    title: "Input Areas",
-    description: "50+ elements that you need for text manipulation and insertion",
+    title: "Pediatricians",
     items: [
       {
         image: `${imagesPrefix}/newsletters.jpg`,
@@ -162,8 +159,7 @@ export default [
     ],
   },
   {
-    title: "Attention Catchers",
-    description: "20+ Fully coded components that popup from different places of the screen",
+    title: "Psychiatrists",
     items: [
       {
         image: `${imagesPrefix}/alerts.jpg`,
@@ -192,8 +188,7 @@ export default [
     ],
   },
   {
-    title: "Elements",
-    description: "80+ carefully crafted small elements that come with multiple colors and shapes",
+    title: "Dermatologist",
     items: [
       {
         image: `${imagesPrefix}/buttons.jpg`,

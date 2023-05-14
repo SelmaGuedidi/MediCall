@@ -37,15 +37,7 @@ function ContactUs() {
   return (
     <>
       <MKBox position="fixed" top="0.5rem" width="100%">
-        <DefaultNavbar
-          routes={routesNavbar}
-          action={{
-            type: "external",
-            route: "https://www.creative-tim.com/product/material-kit-react",
-            label: "free download",
-            color: "info",
-          }}
-        />
+        <DefaultNavbar routes={routesNavbar} />
       </MKBox>
       <Grid container spacing={3} alignItems="center">
         <Grid item xs={12} lg={6}>

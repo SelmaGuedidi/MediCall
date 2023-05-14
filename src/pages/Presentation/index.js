@@ -40,16 +40,16 @@ import Testimonials from "pages/Presentation/sections/Testimonials";
 //import BuiltByDevelopers from "pages/Presentation/components/BuiltByDevelopers";
 
 // Routes
-import routes from "routes";
 //import footerRoutes from "footer.routes";
 
 // Images
-import bgImage from "assets/images/bgimage.png";
+import bgImage from "assets/images/bgimage.jpg";
+import routesNavbar from "../../routesNavbar";
 
 function Presentation() {
   return (
     <>
-      <DefaultNavbar routes={routes} />
+      <DefaultNavbar routes={routesNavbar} />
       <MKBox
         minHeight="75vh"
         width="100%"

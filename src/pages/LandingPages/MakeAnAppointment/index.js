@@ -27,8 +27,8 @@ import DefaultNavbar from "examples/Navbars/DefaultNavbar";
 //import DefaultFooter from "examples/Footers/DefaultFooter";
 
 // Routes
-import routes from "routes";
 import DesignBlocks from "../../Presentation/sections/DesignBlocks";
+import routesNavbar from "../../../routesNavbar";
 //import footerRoutes from "footer.routes";
 
 // Image
@@ -38,7 +38,7 @@ function MakeAnAppointment() {
   return (
     <>
       <MKBox position="fixed" top="0.5rem" width="100%">
-        <DefaultNavbar routes={routes} />
+        <DefaultNavbar routes={routesNavbar} />
       </MKBox>
       <DesignBlocks />
     </>

@@ -29,16 +29,16 @@ import Contact from "pages/LandingPages/Author/sections/Contact";
 import Footer from "pages/LandingPages/Author/sections/Footer";
 
 // Routes
-import routes from "routes";
 
 // Images
 import bgImage from "assets/images/city-profile.jpg";
+import routesNavbar from "../../../routesNavbar";
 
 function Author() {
   return (
     <>
       <DefaultNavbar
-        routes={routes}
+        routes={routesNavbar}
         action={{
           type: "external",
           route: "https://www.creative-tim.com/product/material-kit-react",

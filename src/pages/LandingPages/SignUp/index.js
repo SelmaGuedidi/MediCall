@@ -15,13 +15,13 @@ import Card from "@mui/material/Card";
 import MKTypography from "../../../components/MKTypography";
 import { Link } from "react-router-dom";
 import DefaultNavbar from "../../../examples/Navbars/DefaultNavbar";
-import routes from "../../../routes";
 import bgImage from "../../../assets/images/bg-sign-in-basic.jpeg";
 import MuiLink from "@mui/material/Link";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import GitHubIcon from "@mui/icons-material/GitHub";
 import GoogleIcon from "@mui/icons-material/Google";
 import axios from "axios";
+import routesNavbar from "../../../routesNavbar";
 const SignUpBasic = () => {
   const [formData, setFormData] = useState({
     name: "",
@@ -57,7 +57,7 @@ const SignUpBasic = () => {
   return (
     <>
       <DefaultNavbar
-        routes={routes}
+        routes={routesNavbar}
         action={{
           type: "external",
           route: "https://www.creative-tim.com/product/material-kit-react",

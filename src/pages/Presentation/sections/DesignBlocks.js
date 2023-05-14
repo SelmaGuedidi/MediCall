@@ -43,9 +43,9 @@ function DesignBlocks() {
       </Grid>
       <Grid item xs={12} lg={9}>
         <Grid container spacing={3}>
-          {items.map(({ image, name, count, route, pro }) => (
+          {items.map(({ image, name, count, pro }) => (
             <Grid item xs={12} md={4} sx={{ mb: 2 }} key={name}>
-              <Link to={pro ? "/" : route}>
+              <Link to={"/pages/landing-pages/Profile"}>
                 <ExampleCard image={image} name={name} count={count} pro={pro} />
               </Link>
             </Grid>
@@ -76,7 +76,7 @@ function DesignBlocks() {
           </MKTypography>
         </Grid>
       </Container>
-      <Container sx={{ mt: 6 }}>{renderData}</Container>
+      <Container sx={{ mt: 6 }}>{renderData} </Container>
     </MKBox>
   );
 }

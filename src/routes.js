@@ -51,6 +51,7 @@ import SignIn from "layouts/pages/authentication/sign-in";
 
 import { AccountBox, Info } from "@mui/icons-material";
 import MakeAnAppointment from "./pages/LandingPages/MakeAnAppointment";
+import SignUp from "./pages/LandingPages/SignUp";
 import Profile from "./pages/LandingPages/Profile";
 
 const routes = [
@@ -66,7 +67,7 @@ const routes = [
       {
         name: "sign up",
         route: "/pages/authentication/sign-un",
-        component: <SignIn />,
+        component: <SignUp />,
       },
     ],
   },

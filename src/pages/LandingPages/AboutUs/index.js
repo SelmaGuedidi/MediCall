@@ -34,17 +34,17 @@ import Featuring from "pages/LandingPages/AboutUs/sections/Featuring";
 import Newsletter from "pages/LandingPages/AboutUs/sections/Newsletter";
 
 // Routes
-import routes from "routes";
 import footerRoutes from "footer.routes";
 
 // Images
 import bgImage from "assets/images/bg-about-us.jpg";
+import routesNavbar from "../../../routesNavbar";
 
 function AboutUs() {
   return (
     <>
       <DefaultNavbar
-        routes={routes}
+        routes={routesNavbar}
         action={{
           type: "external",
           route: "https://www.creative-tim.com/product/material-kit-react",

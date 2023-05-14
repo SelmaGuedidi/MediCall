@@ -43,7 +43,7 @@ import Testimonials from "pages/Presentation/sections/Testimonials";
 //import footerRoutes from "footer.routes";
 
 // Images
-import bgImage from "assets/images/bgimage.jpg";
+import bgImage from "assets/images/medical.png";
 import routesNavbar from "../../routesNavbar";
 
 function Presentation() {

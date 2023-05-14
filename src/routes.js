@@ -53,6 +53,7 @@ import { AccountBox, Info } from "@mui/icons-material";
 import MakeAnAppointment from "./pages/LandingPages/MakeAnAppointment";
 import SignUp from "./pages/LandingPages/SignUp";
 import Profile from "./pages/LandingPages/Profile";
+import NotificationCenter from "./pages/LandingPages/MySpace";
 
 const routes = [
   {
@@ -80,6 +81,8 @@ const routes = [
   {
     name: "My Space",
     icon: <Icon>article</Icon>,
+    route: "/pages/landing-pages/MySpace",
+    component: <NotificationCenter />,
   },
   {
     name: "Info",

@@ -13,6 +13,7 @@ import SignIn from "layouts/pages/authentication/sign-in";
 import { AccountBox, Info } from "@mui/icons-material";
 import MakeAnAppointment from "./pages/LandingPages/MakeAnAppointment";
 import SignUp from "./pages/LandingPages/SignUp";
+import NotificationCenter from "./pages/LandingPages/MySpace";
 
 const routesNavbar = [
   {
@@ -40,6 +41,8 @@ const routesNavbar = [
   {
     name: "My Space",
     icon: <Icon>article</Icon>,
+    route: "/pages/landing-pages/MySpace",
+    component: <NotificationCenter />,
   },
   {
     name: "Info",

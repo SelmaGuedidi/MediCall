@@ -9,7 +9,9 @@ import {
   Divider,
   makeStyles,
 } from "@material-ui/core";
-
+import DefaultNavbar from "../../../examples/Navbars/DefaultNavbar";
+import routesNavbar from "../../../routesNavbar";
+import MKBox from "../../../components/MKBox";
 const useStyles = makeStyles((theme) => ({
   paper: {
     padding: theme.spacing(2),
@@ -33,43 +35,54 @@ function NotificationCenter() {
   };
 
   return (
-    <Grid container spacing={2}>
-      <Grid item xs={4}>
-        <Paper className={classes.paper}>
-          <Typography variant="h6">Appointments</Typography>
-          <Divider />
-          <List>
-            {appointments.map((appointment) => (
-              <ListItem
-                key={appointment.id}
-                button
-                selected={selectedAppointment?.id === appointment.id}
-                onClick={() => handleAppointmentClick(appointment)}
-              >
-                <ListItemText
-                  primary={appointment.date}
-                  secondary={`${appointment.time} @ ${appointment.location}`}
-                />
-              </ListItem>
-            ))}
-          </List>
-        </Paper>
-      </Grid>
-      <Grid item xs={8}>
-        {selectedAppointment ? (
-          <Paper className={classes.paper}>
-            <Typography variant="h6">Appointment Details for {selectedAppointment.date}</Typography>
-            <Divider />
-            <Typography variant="subtitle1">Time: {selectedAppointment.time}</Typography>
-            <Typography variant="subtitle1">Location: {selectedAppointment.location}</Typography>
-          </Paper>
-        ) : (
-          <Paper className={classes.paper}>
-            <Typography variant="h6">No appointment selected</Typography>
-          </Paper>
-        )}
-      </Grid>
-    </Grid>
+    <>
+      <MKBox position="fixed" top="0.5rem" width="100%">
+        <DefaultNavbar routes={routesNavbar} />
+      </MKBox>
+      <MKBox my={12} py={6} width="100%">
+        <Grid>
+          <Grid container item xs={12} lg={6} flexDirection="column" alignItems="left">
+            <Paper className={classes.paper}>
+              <Typography variant="h6">Appointments</Typography>
+              <Divider />
+              <List>
+                {appointments.map((appointment) => (
+                  <ListItem
+                    key={appointment.id}
+                    button
+                    selected={selectedAppointment?.id === appointment.id}
+                    onClick={() => handleAppointmentClick(appointment)}
+                  >
+                    <ListItemText
+                      primary={appointment.date}
+                      secondary={`${appointment.time} @ ${appointment.location}`}
+                    />
+                  </ListItem>
+                ))}
+              </List>
+            </Paper>
+          </Grid>
+        </Grid>
+      </MKBox>
+      <MKBox component="section">
+        <Grid item xs={30}>
+          {selectedAppointment ? (
+            <Paper className={classes.paper}>
+              <Typography variant="h6">
+                Appointment Details for {selectedAppointment.date}
+              </Typography>
+              <Divider />
+              <Typography variant="subtitle1">Time: {selectedAppointment.time}</Typography>
+              <Typography variant="subtitle1">Location: {selectedAppointment.location}</Typography>
+            </Paper>
+          ) : (
+            <Paper className={classes.paper}>
+              <Typography variant="h6">No appointment selected</Typography>
+            </Paper>
+          )}
+        </Grid>
+      </MKBox>
+    </>
   );
 }
 

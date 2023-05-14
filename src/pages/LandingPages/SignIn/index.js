@@ -1,54 +1,43 @@
-/**
-=========================================================
-* Material Kit 2 React - v2.1.0
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/material-kit-react
-* Copyright 2023 Creative Tim (https://www.creative-tim.com)
-
-Coded by www.creative-tim.com
-
- =========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-*/
-
-import { useState } from "react";
-
-// react-router-dom components
-import { Link } from "react-router-dom";
-
-// @mui material components
+import React, { useState } from "react";
+import { TextField, Grid, Button } from "@mui/material";
+import MKBox from "../../../components/MKBox";
 import Card from "@mui/material/Card";
-import Switch from "@mui/material/Switch";
-import Grid from "@mui/material/Grid";
+import MKTypography from "../../../components/MKTypography";
+import { Link } from "react-router-dom";
+import DefaultNavbar from "../../../examples/Navbars/DefaultNavbar";
+import routes from "../../../routes";
+import bgImage from "../../../assets/images/bg-sign-in-basic.jpeg";
 import MuiLink from "@mui/material/Link";
-
-// @mui icons
 import FacebookIcon from "@mui/icons-material/Facebook";
 import GitHubIcon from "@mui/icons-material/GitHub";
 import GoogleIcon from "@mui/icons-material/Google";
+import axios from "axios";
+const SignUpBasic = () => {
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+  });
 
-// Material Kit 2 React components
-import MKBox from "components/MKBox";
-import MKTypography from "components/MKTypography";
-import MKInput from "components/MKInput";
-import MKButton from "components/MKButton";
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log(formData);
+    // Send form data using POST request
+    axios
+      .post("myurl", { formData })
+      .then((response) => {
+        console.log(response);
+        //window.location.replace("http://localhost:3000/presentation");
+      })
+      .catch((err) => {
+        console.log(formData);
+        console.log(err);
+        //window.location.replace("http://localhost:3000/presentation");
+      });
+  };
 
-// Material Kit 2 React example components
-import DefaultNavbar from "examples/Navbars/DefaultNavbar";
-import SimpleFooter from "examples/Footers/SimpleFooter";
-
-// Material Kit 2 React page layout routes
-import routes from "routes";
-
-// Images
-import bgImage from "assets/images/bg-sign-in-basic.jpeg";
-
-function SignInBasic() {
-  const [rememberMe, setRememberMe] = useState(false);
-
-  const handleSetRememberMe = () => setRememberMe(!rememberMe);
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
 
   return (
     <>
@@ -108,56 +97,70 @@ function SignInBasic() {
                 </Grid>
               </MKBox>
               <MKBox pt={4} pb={3} px={3}>
-                <MKBox component="form" role="form">
-                  <MKBox mb={2}>
-                    <MKInput type="email" label="Email" fullWidth />
-                  </MKBox>
-                  <MKBox mb={2}>
-                    <MKInput type="password" label="Password" fullWidth />
-                  </MKBox>
-                  <MKBox display="flex" alignItems="center" ml={-1}>
-                    <Switch checked={rememberMe} onChange={handleSetRememberMe} />
-                    <MKTypography
-                      variant="button"
-                      fontWeight="regular"
-                      color="text"
-                      onClick={handleSetRememberMe}
-                      sx={{ cursor: "pointer", userSelect: "none", ml: -1 }}
-                    >
-                      &nbsp;&nbsp;Remember me
-                    </MKTypography>
-                  </MKBox>
-                  <MKBox mt={4} mb={1}>
-                    <MKButton variant="gradient" color="info" fullWidth>
-                      sign in
-                    </MKButton>
-                  </MKBox>
-                  <MKBox mt={3} mb={1} textAlign="center">
-                    <MKTypography variant="button" color="text">
-                      Don&apos;t have an account?{" "}
-                      <MKTypography
-                        component={Link}
-                        to="/authentication/sign-up/cover"
-                        variant="button"
-                        color="info"
-                        fontWeight="medium"
-                        textGradient
-                      >
-                        Sign up
-                      </MKTypography>
-                    </MKTypography>
-                  </MKBox>
-                </MKBox>
+                <form onSubmit={handleSubmit}>
+                  <Grid container spacing={2}>
+                    <Grid item xs={12}>
+                      <TextField
+                        required
+                        id="email"
+                        name="email"
+                        label="Email Address"
+                        fullWidth
+                        autoComplete="email"
+                        value={formData.email}
+                        onChange={handleChange}
+                      />
+                    </Grid>
+                    <Grid item xs={12}>
+                      <TextField
+                        required
+                        id="password"
+                        name="password"
+                        label="Password"
+                        fullWidth
+                        type="password"
+                        autoComplete="new-password"
+                        value={formData.password}
+                        onChange={handleChange}
+                      />
+                    </Grid>
+
+                    <Grid item xs={12}>
+                      <div style={{ textAlign: "center" }}>
+                        <Button
+                          variant="contained"
+                          color="primary"
+                          type="submit"
+                          style={{ color: "white" }}
+                        >
+                          Sign In
+                        </Button>
+                      </div>
+                    </Grid>
+                  </Grid>
+                </form>
               </MKBox>
             </Card>
           </Grid>
         </Grid>
-      </MKBox>
-      <MKBox width="100%" position="absolute" zIndex={2} bottom="1.625rem">
-        <SimpleFooter light />
+        <MKBox mt={3} mb={1} textAlign="center">
+          <MKTypography variant="button" color="text">
+            Already have an account?{" "}
+            <MKTypography
+              component={Link}
+              to="/pages/authentication/sign-up"
+              variant="button"
+              color="info"
+              fontWeight="medium"
+              textGradient
+            >
+              Sign Up
+            </MKTypography>
+          </MKTypography>
+        </MKBox>
       </MKBox>
     </>
   );
-}
+};
 
-export default SignInBasic;
+export default SignUpBasic;

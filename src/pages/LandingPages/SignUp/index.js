@@ -1,67 +1,59 @@
-import React from "react";
-// react-router-dom components
-import { Link } from "react-router-dom";
-// @mui material components
+import React, { useState } from "react";
+import {
+  TextField,
+  Grid,
+  FormControl,
+  RadioGroup,
+  FormControlLabel,
+  Radio,
+  Select,
+  MenuItem,
+  Button,
+} from "@mui/material";
+import MKBox from "../../../components/MKBox";
 import Card from "@mui/material/Card";
-import Grid from "@mui/material/Grid";
+import MKTypography from "../../../components/MKTypography";
+import { Link } from "react-router-dom";
+import DefaultNavbar from "../../../examples/Navbars/DefaultNavbar";
+import routes from "../../../routes";
+import bgImage from "../../../assets/images/bg-sign-in-basic.jpeg";
 import MuiLink from "@mui/material/Link";
-// @mui icons
 import FacebookIcon from "@mui/icons-material/Facebook";
 import GitHubIcon from "@mui/icons-material/GitHub";
 import GoogleIcon from "@mui/icons-material/Google";
+import axios from "axios";
+const SignUpBasic = () => {
+  const [formData, setFormData] = useState({
+    name: "",
+    lastname: "",
+    dob: "",
+    email: "",
+    password: "",
+    role: "",
+    choice: "",
+  });
 
-// Material Kit 2 React components
-import MKBox from "components/MKBox";
-import MKTypography from "components/MKTypography";
-import MKInput from "components/MKInput";
-import MKButton from "components/MKButton";
-
-// Material Kit 2 React example components
-import DefaultNavbar from "examples/Navbars/DefaultNavbar";
-import SimpleFooter from "examples/Footers/SimpleFooter";
-
-// Material Kit 2 React page layout routes
-import routes from "routes";
-
-// Images
-import bgImage from "assets/images/bg-sign-in-basic.jpeg";
-import { FormControlLabel, MenuItem, Radio, RadioGroup, TextField } from "@mui/material";
-//import axios from "axios";
-
-//
-// function handleSubmit(event) {
-//   event.preventDefault(); // Empêche la soumission du formulaire
-//
-//   // Envoie les informations via une requête POST
-//   axios
-//     .post("/api/contact", {})
-//     .then((response) => {
-//       // Gère la réponse de la requête
-//       console.log(response.data);
-//     })
-//     .catch((error) => {
-//       // Gère les erreurs éventuelles
-//       console.error(error);
-//     });
-// }
-
-function SignUpBasic() {
-  // const [rememberMe, setRememberMe] = useState(false);
-  // const handleSetRememberMe = () => setRememberMe(!rememberMe);
-  const [isDoctor, setIsDoctor] = React.useState(false);
-  const [doctorType, setDoctorType] = React.useState("");
-  // const handleSubmit = (event) => {
-  //   event.preventDefault();
-  //   alert("TEST_TEST");
-  // };
-
-  const handleDoctorChange = (event) => {
-    setIsDoctor(event.target.value === "doctor");
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log(formData);
+    // Send form data using POST request
+    axios
+      .post("myurl", { formData })
+      .then((response) => {
+        console.log(response);
+        //window.location.replace("http://localhost:3000/presentation");
+      })
+      .catch((err) => {
+        console.log(formData);
+        console.log(err);
+        //window.location.replace("http://localhost:3000/presentation");
+      });
   };
 
-  const handleDoctorTypeChange = (event) => {
-    setDoctorType(event.target.value);
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
   };
+
   return (
     <>
       <DefaultNavbar
@@ -130,122 +122,147 @@ function SignUpBasic() {
                 </Grid>
               </MKBox>
               <MKBox pt={4} pb={3} px={3}>
-                <MKBox component="form" role="form">
-                  <MKBox mb={2}>
-                    <MKInput type="text" label="Name" fullWidth />
-                  </MKBox>
-                  <MKBox mb={2}>
-                    <MKInput type="text" label="LastName" fullWidth />
-                  </MKBox>
-                  <MKBox mb={2}>
-                    <MKInput type="date" label="" fullWidth />
-                  </MKBox>
-                  <MKBox mb={2}>
-                    <MKInput type="email" label="Email" fullWidth />
-                  </MKBox>
-                  <MKBox mb={2}>
-                    <MKInput type="password" label="Password" fullWidth />
-                  </MKBox>
-
-                  <RadioGroup name="job" aria-labelledby="a" row>
-                    <FormControlLabel
-                      control={<Radio />}
-                      label="doctor"
-                      value="doctor"
-                      onChange={handleDoctorChange}
-                      checked={isDoctor}
-                    />
-                    <FormControlLabel
-                      control={<Radio />}
-                      label="patient"
-                      value="patient"
-                      onChange={handleDoctorChange}
-                      checked={!isDoctor}
-                    />
-                  </RadioGroup>
-                  {isDoctor && (
-                    <MKBox mb={2}>
+                <form onSubmit={handleSubmit}>
+                  <Grid container spacing={3}>
+                    <Grid item xs={12} sm={6}>
                       <TextField
-                        select
-                        value={doctorType}
+                        required
+                        id="name"
+                        name="name"
+                        label="First name"
                         fullWidth
-                        onChange={handleDoctorTypeChange}
-                      >
-                        <MenuItem value="">Select a type</MenuItem>
-                        <MenuItem value="general">Generalist</MenuItem>
-                        <MenuItem value="cardio">Cardiologist</MenuItem>
-                        <MenuItem value="pedi">Pediatrician</MenuItem>
-                        <MenuItem value="psych">Psychiatrist</MenuItem>
-                        <MenuItem value="derma">Dermatologist</MenuItem>
-                        <MenuItem value="opht">Ophtalmologist</MenuItem>
-                        <MenuItem value="neuro">Neurologist</MenuItem>
-                        <MenuItem value="gastro">Gastrologist</MenuItem>
-                      </TextField>
-                    </MKBox>
-                  )}
-
-                  {/*<MKBox display="flex" alignItems="center" ml={-1}>*/}
-                  {/*  <Switch checked={rememberMe} onChange={handleSetRememberMe} />*/}
-                  {/*  <MKTypography*/}
-                  {/*    variant="button"*/}
-                  {/*    fontWeight="regular"*/}
-                  {/*    color="text"*/}
-                  {/*    onClick={handleSetRememberMe}*/}
-                  {/*    sx={{ cursor: "pointer", userSelect: "none", ml: -1 }}*/}
-                  {/*  >*/}
-                  {/*    &nbsp;&nbsp;Remember me*/}
-                  {/*  </MKTypography>*/}
-                  {/*</MKBox>*/}
-                  <MKBox mt={4} mb={1}>
-                    <MKButton
-                      variant="gradient"
-                      color="info"
-                      fullWidth
-                      onClick={() => {
-                        // Envoie les informations via une requête POST
-                        // axios
-                        //   .post("/api/contact", {})
-                        //   .then((response) => {
-                        //     // Gère la réponse de la requête
-                        //     console.log(response.data);
-                        //   })
-                        //   .catch((error) => {
-                        //     // Gère les erreurs éventuelles
-                        //     console.error(error);
-                        //   });
-                        window.location.replace("http://localhost:3000/presentation");
-                      }}
-                    >
-                      sign up
-                    </MKButton>
-                  </MKBox>
-
-                  <MKBox mt={3} mb={1} textAlign="center">
-                    <MKTypography variant="button" color="text">
-                      Already have an account?{" "}
-                      <MKTypography
-                        component={Link}
-                        to="/authentication/sign-in"
-                        variant="button"
-                        color="info"
-                        fontWeight="medium"
-                        textGradient
-                      >
-                        Sign in
-                      </MKTypography>
-                    </MKTypography>
-                  </MKBox>
-                </MKBox>
+                        autoComplete="given-name"
+                        value={formData.name}
+                        onChange={handleChange}
+                      />
+                    </Grid>
+                    <Grid item xs={12} sm={6}>
+                      <TextField
+                        required
+                        id="lastname"
+                        name="lastname"
+                        label="Last name"
+                        fullWidth
+                        autoComplete="family-name"
+                        value={formData.lastname}
+                        onChange={handleChange}
+                      />
+                    </Grid>
+                    <Grid item xs={12}>
+                      <TextField
+                        required
+                        id="dob"
+                        name="dob"
+                        label="Date of Birth"
+                        fullWidth
+                        type="date"
+                        InputLabelProps={{
+                          shrink: true,
+                        }}
+                        value={formData.dob}
+                        onChange={handleChange}
+                      />
+                    </Grid>
+                    <Grid item xs={12}>
+                      <TextField
+                        required
+                        id="email"
+                        name="email"
+                        label="Email Address"
+                        fullWidth
+                        autoComplete="email"
+                        value={formData.email}
+                        onChange={handleChange}
+                      />
+                    </Grid>
+                    <Grid item xs={12}>
+                      <TextField
+                        required
+                        id="password"
+                        name="password"
+                        label="Password"
+                        fullWidth
+                        type="password"
+                        autoComplete="new-password"
+                        value={formData.password}
+                        onChange={handleChange}
+                      />
+                    </Grid>
+                    <Grid item xs={12}>
+                      <FormControl component="fieldset">
+                        {/*<FormLabel component="legend">Role</FormLabel>*/}
+                        <RadioGroup
+                          aria-label="role"
+                          name="role"
+                          value={formData.role}
+                          onChange={handleChange}
+                          row
+                          required
+                        >
+                          <FormControlLabel value="doctor" control={<Radio />} label="Doctor" />
+                          <FormControlLabel value="patient" control={<Radio />} label="Patient" />
+                        </RadioGroup>
+                      </FormControl>
+                    </Grid>
+                    {formData.role === "doctor" && (
+                      <Grid item xs={12}>
+                        <FormControl fullWidth>
+                          {/*<FormLabel component="legend">Choice</FormLabel>*/}
+                          <Select
+                            id="choice"
+                            name="choice"
+                            value={formData.choice}
+                            onChange={handleChange}
+                          >
+                            <MenuItem value="">Select a type</MenuItem>
+                            <MenuItem value="cardio">Cardiologist</MenuItem>
+                            <MenuItem value="derma">Dermatologist</MenuItem>
+                            <MenuItem value="gastro">Gastrologist</MenuItem>
+                            <MenuItem value="general">Generalist</MenuItem>
+                            <MenuItem value="neuro">Neurologist</MenuItem>
+                            <MenuItem value="opht">Ophtalmologist</MenuItem>
+                            <MenuItem value="pedi">Pediatrician</MenuItem>
+                            <MenuItem value="psych">Psychiatrist</MenuItem>
+                          </Select>
+                        </FormControl>
+                      </Grid>
+                    )}
+                    <Grid item xs={12}>
+                      <div style={{ textAlign: "center" }}>
+                        <Button
+                          variant="contained"
+                          color="primary"
+                          type="submit"
+                          style={{ color: "white" }}
+                        >
+                          Submit
+                        </Button>
+                      </div>
+                    </Grid>
+                  </Grid>
+                </form>
               </MKBox>
             </Card>
           </Grid>
         </Grid>
-      </MKBox>
-      <MKBox width="100%" position="absolute" zIndex={2} bottom="1.625rem">
-        <SimpleFooter light />
+        <MKBox mt={3} mb={1} textAlign="center">
+          <MKTypography variant="button" color="text">
+            Already have an account?{" "}
+            <MKTypography
+              component={Link}
+              to="/pages/authentication/sign-in"
+              variant="button"
+              color="info"
+              fontWeight="medium"
+              textGradient
+            >
+              Sign In
+            </MKTypography>
+          </MKTypography>
+        </MKBox>
       </MKBox>
     </>
   );
-}
+};
 
 export default SignUpBasic;

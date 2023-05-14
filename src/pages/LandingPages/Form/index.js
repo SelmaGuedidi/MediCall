@@ -197,6 +197,7 @@ const MaterialUIForm = () => {
                           value={formData.role}
                           onChange={handleChange}
                           row
+                          required
                         >
                           <FormControlLabel value="doctor" control={<Radio />} label="Doctor" />
                           <FormControlLabel value="patient" control={<Radio />} label="Patient" />
@@ -227,9 +228,16 @@ const MaterialUIForm = () => {
                       </Grid>
                     )}
                     <Grid item xs={12}>
-                      <Button variant="contained" color="primary" type="submit">
-                        Submit
-                      </Button>
+                      <div style={{ textAlign: "center" }}>
+                        <Button
+                          variant="contained"
+                          color="primary"
+                          type="submit"
+                          style={{ color: "white" }}
+                        >
+                          Submit
+                        </Button>
+                      </div>
                     </Grid>
                   </Grid>
                 </form>

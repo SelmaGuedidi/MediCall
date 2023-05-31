@@ -30,23 +30,10 @@ import DefaultFooter from "examples/Footers/DefaultFooter";
 import footerRoutes from "footer.routes";
 
 // Image
-import bgImage from "assets/images/illustrations/illustration-reset.jpg";
+import bgImage from "assets/images/medicall.png";
 import routesNavbar from "../../../routesNavbar";
-import { useEffect, useState } from "react";
 
 function ContactUs() {
-  const [posts, setPosts] = useState([]);
-  useEffect(() => {
-    fetch("http://localhost:3001/doctor")
-      .then((response) => response.json())
-      .then((data) => {
-        console.log(data);
-        setPosts(data);
-      })
-      .catch((err) => {
-        console.log(err.message);
-      });
-  }, []);
   return (
     <>
       <MKBox position="fixed" top="0.5rem" width="100%">
@@ -55,13 +42,17 @@ function ContactUs() {
       <Grid container spacing={3} alignItems="center">
         <Grid item xs={12} lg={6}>
           <MKBox
-            display={{ xs: "none", lg: "flex" }}
             width="calc(100% - 2rem)"
             height="calc(100vh - 2rem)"
             borderRadius="lg"
             ml={2}
             mt={2}
-            sx={{ backgroundImage: `url(${bgImage})` }}
+            sx={{
+              backgroundImage: `url(${bgImage})`,
+              backgroundPosition: "center",
+              backgroundRepeat: "no-repeat",
+              backgroundSize: "cover",
+            }}
           />
         </Grid>
         <Grid
@@ -98,15 +89,6 @@ function ContactUs() {
                 ContactUs
               </MKTypography>
             </MKBox>
-            <div className="posts-container">
-              {posts.map((post) => {
-                return (
-                  <div className="post-card" key={post.id}>
-                    {post.id}
-                  </div>
-                );
-              })}
-            </div>
             <MKBox p={3}>
               {/*<MKTypography variant="body2" color="text" mb={3}></MKTypography>*/}
               <MKBox width="100%" component="form" method="post" autoComplete="off">

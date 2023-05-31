@@ -90,7 +90,7 @@ function ContactUs() {
               </MKTypography>
             </MKBox>
             <MKBox p={3}>
-              <MKTypography variant="body2" color="text" mb={3}></MKTypography>
+              {/*<MKTypography variant="body2" color="text" mb={3}></MKTypography>*/}
               <MKBox width="100%" component="form" method="post" autoComplete="off">
                 <Grid container spacing={3}>
                   <Grid item xs={12} md={6}>

@@ -20,47 +20,56 @@ import MuiLink from "@mui/material/Link";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import GitHubIcon from "@mui/icons-material/GitHub";
 import GoogleIcon from "@mui/icons-material/Google";
-import axios from "axios";
 import routesNavbar from "../../../routesNavbar";
-import Cookies from "js-cookie";
+import { not_authenticated } from "../../../generic/generic_functions/authenticated";
+//import { useNavigate } from "react-router";
 const SignUpBasic = () => {
   const [formData, setFormData] = useState({
-    name: "",
+    firstname: "",
     lastname: "",
-    dob: "",
+    birthdate: "",
     email: "",
     password: "",
     role: "",
-    choice: "",
+    speciality: "",
   });
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log(formData);
-    // Send form data using POST request
-    axios
-      .post("myurl", { formData })
-      .then((response) => {
-        console.log(response);
-        window.location.replace("http://localhost:3000/pages/authentication/sign-up");
-      })
-      .catch((err) => {
-        console.log(formData);
-        console.log(err);
-        window.location.replace("http://localhost:3000/pages/authentication/sign-in");
-        //window.location.replace("http://localhost:3000/presentation");
+  const handleSubmit = async (event) => {
+    event.preventDefault(); // Prevent the default form submission
+
+    try {
+      const response = await fetch("http://localhost:3001/user/subscribe", {
+        method: "POST",
+        body: JSON.stringify(formData), // Convert the formData to JSON
+        headers: {
+          "Content-Type": "application/json", // Set the Content-Type header to application/json
+        },
       });
+
+      // Check the status code of the response
+      if (response.status / 100 === 404) {
+        console.log("Error");
+        console.log(response);
+      } else if (response.status === 201) {
+        // let navigate = useNavigate();
+        // navigate("/pages/authentication/sign-in");
+        console.log(response);
+        //window.location.replace("http://localhost:3000/pages/authentication/sign-in");
+      } else {
+        console.log("Unexpected response status:", response.status);
+        console.log(response);
+      }
+    } catch (error) {
+      // Handle errors here
+      console.log(error);
+    }
   };
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const isAuthenticated = Cookies.get("authenticated");
-  if (isAuthenticated) {
-    window.location.replace("http://localhost:3000/presentation");
-    return null;
-  }
+  not_authenticated();
   return (
     <>
       <DefaultNavbar
@@ -134,12 +143,12 @@ const SignUpBasic = () => {
                     <Grid item xs={12} sm={6}>
                       <TextField
                         required
-                        id="name"
-                        name="name"
+                        id="firstname"
+                        name="firstname"
                         label="First name"
                         fullWidth
                         autoComplete="given-name"
-                        value={formData.name}
+                        value={formData.firstname}
                         onChange={handleChange}
                       />
                     </Grid>
@@ -158,15 +167,15 @@ const SignUpBasic = () => {
                     <Grid item xs={12}>
                       <TextField
                         required
-                        id="dob"
-                        name="dob"
+                        id="birthdate"
+                        name="birthdate"
                         label="Date of Birth"
                         fullWidth
                         type="date"
                         InputLabelProps={{
                           shrink: true,
                         }}
-                        value={formData.dob}
+                        value={formData.birthdate}
                         onChange={handleChange}
                       />
                     </Grid>
@@ -216,20 +225,23 @@ const SignUpBasic = () => {
                         <FormControl fullWidth>
                           {/*<FormLabel component="legend">Choice</FormLabel>*/}
                           <Select
-                            id="choice"
-                            name="choice"
-                            value={formData.choice}
+                            id="speciality"
+                            name="speciality"
+                            value={formData.speciality}
                             onChange={handleChange}
                           >
                             <MenuItem value="">Select a type</MenuItem>
-                            <MenuItem value="cardio">Cardiologist</MenuItem>
-                            <MenuItem value="derma">Dermatologist</MenuItem>
-                            <MenuItem value="gastro">Gastrologist</MenuItem>
-                            <MenuItem value="general">Generalist</MenuItem>
-                            <MenuItem value="neuro">Neurologist</MenuItem>
-                            <MenuItem value="opht">Ophtalmologist</MenuItem>
-                            <MenuItem value="pedi">Pediatrician</MenuItem>
-                            <MenuItem value="psych">Psychiatrist</MenuItem>
+
+                            <MenuItem value="gynecologist">Gynecologist</MenuItem>
+                            <MenuItem value="dermatologist">Dermatologist</MenuItem>
+                            <MenuItem value="radiologist">Radiologist</MenuItem>
+                            <MenuItem value="neurologist">Neurologist</MenuItem>
+                            <MenuItem value="otolaryngologist">Otolaryngologist</MenuItem>
+                            <MenuItem value="gastroenterologist">Gastroenterologist</MenuItem>
+                            <MenuItem value="ophthalmologist">Ophthalmologist</MenuItem>
+                            <MenuItem value="orthopedist">Orthopedist</MenuItem>
+                            <MenuItem value="psychiatrist">Psychiatrist</MenuItem>
+                            <MenuItem value="cardiologist">Cardiologist</MenuItem>
                           </Select>
                         </FormControl>
                       </Grid>

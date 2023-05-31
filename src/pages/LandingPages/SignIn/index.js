@@ -10,47 +10,53 @@ import MuiLink from "@mui/material/Link";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import GitHubIcon from "@mui/icons-material/GitHub";
 import GoogleIcon from "@mui/icons-material/Google";
-import axios from "axios";
+//import axios from "axios";
 import routesNavbar from "../../../routesNavbar";
 import Cookies from "js-cookie";
+import { not_authenticated } from "../../../generic/generic_functions/authenticated";
+import { useNavigate } from "react-router";
 
 const SignInBasic = () => {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
-
-  const handleSubmit = async (email, password) => {
-    try {
-      const response = await axios.post("/api/authenticate", {
-        email,
-        password,
-      });
-
-      const { token } = response.data;
-      Cookies.set("jwt_token", token);
-
-      return token;
-    } catch (error) {
-      // const token1 =
-      //   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c";
-      //Cookies.set("jwt_token", token1);
-      Cookies.set("user_id", "123");
-      Cookies.set("authenticated", true);
-      Cookies.set("role", "doctor");
-      window.location.replace("http://localhost:3000/presentation");
-      //console.error(error);
-    }
-  };
-
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
-  const isAuthenticated = Cookies.get("authenticated");
-  if (isAuthenticated) {
-    window.location.replace("http://localhost:3000/presentation");
-    return null;
-  }
+  const handleSubmit = async (event) => {
+    event.preventDefault(); // Prevent the default form submission
+
+    try {
+      const response = await fetch("http://localhost:3001/user/login", {
+        method: "POST",
+        body: JSON.stringify(formData), // Convert the formData to JSON
+        headers: {
+          "Content-Type": "application/json", // Set the Content-Type header to application/json
+        },
+      });
+
+      // Check the status code of the response
+      if (response.status === 404) {
+        console.log("Username or password incorrect");
+      } else if (response.status === 400) {
+        console.log("Email must be a valid email");
+      } else if (response.status === 201) {
+        const responseBody = await response.clone().json();
+        const { access_token } = responseBody;
+        console.log("Access Token:", access_token);
+        Cookies.set("token", access_token);
+        let navigate = useNavigate();
+        navigate("/presentation");
+      } else {
+        console.log("Unexpected response status:", response.status);
+      }
+    } catch (error) {
+      // Handle errors here
+      console.log(error);
+    }
+  };
+  not_authenticated();
   return (
     <>
       <DefaultNavbar routes={routesNavbar} transparent light />

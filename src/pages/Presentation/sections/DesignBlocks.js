@@ -15,7 +15,6 @@ Coded by www.creative-tim.com
 
 // react-router-dom components
 import { Link } from "react-router-dom";
-
 // @mui material components
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
@@ -29,24 +28,37 @@ import MKTypography from "components/MKTypography";
 import ExampleCard from "pages/Presentation/components/ExampleCard";
 
 // Data
-import data from "pages/Presentation/sections/data/designBlocksData";
+//import data from "pages/Presentation/sections/data/designBlocksData";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 function DesignBlocks() {
-  const renderData = data.map(({ title, items }) => (
-    <Grid container spacing={3} sx={{ mb: 10 }} key={title}>
+  const [speciality, seSpecialities] = useState([]);
+  const client = axios.create({
+    baseURL: "http://localhost:3001/speciality",
+  });
+  useEffect(() => {
+    const fetchsSeciality = async () => {
+      let response = await client.get("");
+      seSpecialities(response.data);
+    };
+    fetchsSeciality();
+  }, []);
+  const renderData = speciality.map(({ name, doctors }) => (
+    <Grid container spacing={3} sx={{ mb: 10 }} key={name}>
       <Grid item xs={12} lg={3}>
         <MKBox position="sticky" top="100px" pb={{ xs: 2, lg: 6 }}>
           <MKTypography variant="h3" fontWeight="bold" mb={1}>
-            {title}
+            {name.charAt(0).toUpperCase() + name.slice(1)}
           </MKTypography>
         </MKBox>
       </Grid>
       <Grid item xs={12} lg={9}>
         <Grid container spacing={3}>
-          {items.map(({ image, name, count, pro }) => (
+          {doctors.map(({ image, firstname, lastname, id }) => (
             <Grid item xs={12} md={4} sx={{ mb: 2 }} key={name}>
-              <Link to={"/pages/landing-pages/Profile"}>
-                <ExampleCard image={image} name={name} count={count} pro={pro} />
+              <Link to="/pages/landing-pages/Profile" state={{ id: id, speciality: name }}>
+                <ExampleCard image={image} name={firstname} lastname={lastname} />
               </Link>
             </Grid>
           ))}
@@ -80,5 +92,4 @@ function DesignBlocks() {
     </MKBox>
   );
 }
-
 export default DesignBlocks;

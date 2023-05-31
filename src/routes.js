@@ -42,7 +42,7 @@ import Icon from "@mui/material/Icon";
 // @mui icons
 
 // Pages
-import AboutUs from "layouts/pages/landing-pages/about-us";
+//import AboutUs from "layouts/pages/landing-pages/about-us";
 import ContactUs from "layouts/pages/landing-pages/contact-us";
 import Author from "layouts/pages/landing-pages/author";
 import SignIn from "layouts/pages/authentication/sign-in";
@@ -58,6 +58,7 @@ import Agora from "./pages/LandingPages/Agora";
 
 import RequestAppointment from "./pages/LandingPages/RequestAppointment";
 import SignOut from "./layouts/pages/authentication/sign-out";
+import AboutUs from "./pages/LandingPages/AboutUs";
 
 const routes = [
   {

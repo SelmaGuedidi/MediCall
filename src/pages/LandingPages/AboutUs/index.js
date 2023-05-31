@@ -32,7 +32,7 @@ import Information from "pages/LandingPages/AboutUs/sections/Information";
 import Team from "pages/LandingPages/AboutUs/sections/Team";
 import Featuring from "pages/LandingPages/AboutUs/sections/Featuring";
 import Newsletter from "pages/LandingPages/AboutUs/sections/Newsletter";
-
+//import axios from "axios";
 // Routes
 import footerRoutes from "footer.routes";
 
@@ -43,17 +43,7 @@ import routesNavbar from "../../../routesNavbar";
 function AboutUs() {
   return (
     <>
-      <DefaultNavbar
-        routes={routesNavbar}
-        action={{
-          type: "external",
-          route: "https://www.creative-tim.com/product/material-kit-react",
-          label: "free download",
-          color: "default",
-        }}
-        transparent
-        light
-      />
+      <DefaultNavbar routes={routesNavbar} />
       <MKBox
         minHeight="75vh"
         width="100%"

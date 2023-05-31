@@ -32,8 +32,21 @@ import footerRoutes from "footer.routes";
 // Image
 import bgImage from "assets/images/illustrations/illustration-reset.jpg";
 import routesNavbar from "../../../routesNavbar";
+import { useEffect, useState } from "react";
 
 function ContactUs() {
+  const [posts, setPosts] = useState([]);
+  useEffect(() => {
+    fetch("http://localhost:3000/doctor")
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+        setPosts(data);
+      })
+      .catch((err) => {
+        console.log(err.message);
+      });
+  }, []);
   return (
     <>
       <MKBox position="fixed" top="0.5rem" width="100%">
@@ -82,14 +95,20 @@ function ContactUs() {
               mt={-3}
             >
               <MKTypography variant="h3" color="white">
-                Contact us
+                ContactUs
               </MKTypography>
             </MKBox>
+            <div className="posts-container">
+              {posts.map((post) => {
+                return (
+                  <div className="post-card" key={post.id}>
+                    {post.id}
+                  </div>
+                );
+              })}
+            </div>
             <MKBox p={3}>
-              <MKTypography variant="body2" color="text" mb={3}>
-                For further questions, including partnership opportunities, please email
-                hello@creative-tim.com or contact using our contact form.
-              </MKTypography>
+              <MKTypography variant="body2" color="text" mb={3}></MKTypography>
               <MKBox width="100%" component="form" method="post" autoComplete="off">
                 <Grid container spacing={3}>
                   <Grid item xs={12} md={6}>

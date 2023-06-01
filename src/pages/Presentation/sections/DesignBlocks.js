@@ -38,11 +38,11 @@ function DesignBlocks() {
     baseURL: "http://localhost:3001/speciality",
   });
   useEffect(() => {
-    const fetchsSeciality = async () => {
+    const fetchSeciality = async () => {
       let response = await client.get("");
       seSpecialities(response.data);
     };
-    fetchsSeciality();
+    fetchSeciality();
   }, []);
   const renderData = speciality.map(({ name, doctors }) => (
     <Grid container spacing={3} sx={{ mb: 10 }} key={name}>
@@ -77,7 +77,7 @@ function DesignBlocks() {
           lg={6}
           flexDirection="column"
           alignItems="center"
-          sx={{ textAlign: "center", my: 6, mx: "auto", px: 0.75 }}
+          sx={{ textAlign: "center", my: 6, mx: "auto", px: 0.75, marginTop: "100px" }}
         >
           <MKTypography variant="h2" fontWeight="bold">
             View our Doctors

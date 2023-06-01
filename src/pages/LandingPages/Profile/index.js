@@ -100,7 +100,7 @@ function Profile() {
               <MKBox
                 variant="gradient"
                 bgColor="info"
-                coloredShadow="info"
+                coloredShadow="success"
                 borderRadius="lg"
                 p={2}
                 mx={2}
@@ -119,13 +119,13 @@ function Profile() {
               <MKBox p={3}>
                 <Grid>
                   <MKTypography variant="body" color="text" mb={3} style={{ marginTop: "30px" }}>
-                    Speciality : {speciality}
+                    Speciality : {speciality.charAt(0).toUpperCase() + speciality.slice(1)}
                   </MKTypography>
                 </Grid>
                 <Grid>
                   <MKTypography variant="body" color="text" mb={3}></MKTypography>
                   <MKTypography variant="body" color="text" mb={3} style={{ marginTop: "30px" }}>
-                    Consultation price: {doctor.visitprice}
+                    Consultation Price: {doctor.visitprice}
                   </MKTypography>
                 </Grid>
                 <Grid container item justifyContent="center" xs={12} mt={5} mb={2}>

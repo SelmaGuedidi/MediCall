@@ -37,7 +37,7 @@ import Newsletter from "pages/LandingPages/AboutUs/sections/Newsletter";
 import footerRoutes from "footer.routes";
 
 // Images
-import bgImage from "assets/images/bg-about-us.jpg";
+import bgImage from "assets/images/medical.png";
 import routesNavbar from "../../../routesNavbar";
 
 function AboutUs() {
@@ -71,19 +71,19 @@ function AboutUs() {
             sx={{ mx: "auto", textAlign: "center" }}
           >
             <MKTypography
-              variant="h1"
+              variant="body1"
               color="white"
-              sx={({ breakpoints, typography: { size } }) => ({
-                [breakpoints.down("md")]: {
-                  fontSize: size["3xl"],
-                },
-              })}
+              opacity={0.8}
+              mt={1}
+              mb={3}
+              sx={{ marginTop: "200px" }}
             >
-              Work with an amazing design
-            </MKTypography>
-            <MKTypography variant="body1" color="white" opacity={0.8} mt={1} mb={3}>
-              We&apos;re constantly trying to express ourselves and actualize our dreams. If you
-              have the opportunity to play this game
+              Our medical teleconsultation website MediCall is an online platform that patients to
+              consult doctors and healthcare professionals from conveniently and securely, from the
+              comfort of their home. Our goal is to facilitate access to health care by offering a
+              practical alternative to in-person consultations. Our platform aims to connect
+              patients with qualified medical professionals, so that they can receive medical,
+              diagnosis and appropriate treatment.
             </MKTypography>
             <MKButton color="default" sx={{ color: ({ palette: { dark } }) => dark.main }}>
               create account

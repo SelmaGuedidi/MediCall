@@ -34,19 +34,18 @@ const useStyles = makeStyles((theme) => ({
 let appointments = [
   {
     id: 1,
-    date: "2023-05-12",
-    user_name: "10:00 AM",
-    user_lastname: "10:00 AM",
-    email: "New York",
+    FirstName: "X",
+    LastName: "X",
+    email: "X@gmail.com",
+    DateOfbirth: "05/06/1982",
   },
   {
     id: 2,
-    date: "2023-05-13",
-    user_name: "2:00 PM",
-    user_lastname: "10:00 AM",
-    email: "Los Angeles",
+    FirstName: "Foulen",
+    LastName: "Ben foulen",
+    email: "foulen@gmail.com",
+    DateOfbirth: "01/01/1990",
   },
-  { id: 3, date: "2023-05-14", user_name: "4:00 PM", user_lastname: "10:00 AM", email: "Chicago" },
 ];
 
 function RequestAppointment() {
@@ -151,8 +150,8 @@ function RequestAppointment() {
                   onClick={() => handleAppointmentClick(appointment)}
                 >
                   <ListItemText
-                    primary={`${appointment.user_lastname} @ ${appointment.user_name}`}
-                    secondary={`${appointment.date} @ ${appointment.email}`}
+                    primary={`${appointment.FirstName} ${appointment.LastName}`}
+                    secondary={`${appointment.DateOfbirth} ${appointment.email}`}
                   />
                 </ListItem>
               ))}
@@ -164,11 +163,13 @@ function RequestAppointment() {
             <Paper className={classes.paper}>
               <Typography variant="h6">
                 Request Details for{" "}
-                {`${selectedAppointment.user_lastname} @ ${selectedAppointment.user_name}`}
+                {`${selectedAppointment.FirstName} ${selectedAppointment.LastName}`}
               </Typography>
               <Divider />
-              <Typography variant="subtitle1">Time: {selectedAppointment.date}</Typography>
-              <Typography variant="subtitle1">Location: {selectedAppointment.email}</Typography>
+              <Typography variant="subtitle1">
+                Date of birth: {selectedAppointment.DateOfbirth}
+              </Typography>
+              <Typography variant="subtitle1">Email: {selectedAppointment.email}</Typography>
               <div style={{ marginTop: "16px", marginBottom: "16px" }}>
                 <AcceptButton onClick={handleAcceptButtonClick} />{" "}
                 <DeclineButton onClick={handleDeclineButtonClick} />

@@ -7,11 +7,9 @@ import routesNavbar from "../../../routesNavbar";
 import MKBox from "../../../components/MKBox";
 import MKTypography from "../../../components/MKTypography";
 import MKButton from "../../../components/MKButton";
-//import { useNavigate } from "react-router-dom";
-//import PropTypes from "prop-types";
 import axios from "axios";
 import { attributes } from "../../../generic/generic_functions/authenticated";
-import { useLocation } from "react-router-dom";
+
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -28,35 +26,48 @@ const useStyles = makeStyles((theme) => ({
     width: "25ch",
   },
 }));
-//const navigate = useNavigate();
+
 function ProfileUser() {
   const attributesData = attributes();
-  const isAuthenticated = attributesData.authenticated;
-  const userId = attributesData.user_id;
-  console.log("User ID : ", userId);
-  if (!isAuthenticated) {
-    window.location.href = "/pages/authentication/sign-in";
-  }
+  //const isAuthenticated = attributesData.authenticated;
+  const id = attributesData.user_id;
+  console.log(id);
   const classes = useStyles();
+  console.log(classes);
   const [doctor, setDoctor] = useState([]);
+  console.log(doctor);
+  // useEffect(() => {
+  //   if (!isAuthenticated) {
+  //     window.location.href = "/pages/authentication/sign-in";
+  //     return;
+  //   }
+  //
+  //   const fetchUser = async (userId) => {
+  //     try {
+  //       const res = await axios.get(`http://localhost:3001/user/${userId}`);
+  //       setDoctor(res.data);
+  //     } catch (err) {
+  //       console.log("Error:", err);
+  //     }
+  //   };
+  //
+  //   fetchUser(userId);
+  // }, [isAuthenticated, userId]);
   useEffect(() => {
-    const location = useLocation();
-    const { userId } = location.state;
-    const fetchUser = async (userId) => {
+    const fetchUser = async () => {
       try {
-        const res = await axios.get(`http://localhost:3001/user/${userId}`);
-        console.log("Response", res);
-        setDoctor(res.data);
-      } catch (err) {
-        console.log("Error :", err);
+        const response = await axios.get(`http://localhost:3001/user/${id}`);
+        const userData = response.data;
+        console.log(userData);
+        setDoctor(response.data);
+        // Process the user data as needed
+      } catch (error) {
+        console.log("Error:", error);
       }
     };
-
-    fetchUser(userId);
-  }, []);
-
+    fetchUser();
+  }, [id]);
   const handleClick = () => {};
-
   return (
     <>
       <DefaultNavbar routes={routesNavbar} />
@@ -112,11 +123,6 @@ function ProfileUser() {
                 </MKTypography>
               </MKBox>
               <MKBox p={3}>
-                <Grid>
-                  <MKTypography variant="body" color="text" mb={3} style={{ marginTop: "30px" }}>
-                    Speciality : {doctor.email}
-                  </MKTypography>
-                </Grid>
                 <Grid container item justifyContent="center" xs={12} mt={5} mb={2}>
                   <MKButton
                     variant="gradient"
@@ -145,4 +151,5 @@ function ProfileUser() {
     </>
   );
 }
+
 export default ProfileUser;

@@ -14,6 +14,7 @@ import axios from "axios";
 import routesNavbar from "../../../routesNavbar";
 import Cookies from "js-cookie";
 import { not_authenticated } from "../../../generic/generic_functions/authenticated";
+import jwt_decode from "jwt-decode";
 //import { not_authenticated } from "../../../generic/generic_functions/authenticated";
 //import jwt_decode from "jwt-decode";
 //import { useNavigate } from "react-router";
@@ -43,13 +44,13 @@ const SignInBasic = () => {
         const { access_token } = response.data;
         console.log("Access Token:", access_token);
         Cookies.set("token", access_token);
-        // const decodedToken = jwt_decode(Cookies.get("token"));
-        // const isAuthenticated = decodedToken.authenticated;
-        // const userId = decodedToken.id;
-        // const userRole = decodedToken.role;
-        // console.log("Authenticated :", isAuthenticated);
-        // console.log("userId :", userId);
-        // console.log("userRole :", userRole);
+        const decodedToken = jwt_decode(Cookies.get("token"));
+        const isAuthenticated = decodedToken.authenticated;
+        const userId = decodedToken.id;
+        const userRole = decodedToken.role;
+        console.log("Authenticated :", isAuthenticated);
+        console.log("userId :", userId);
+        console.log("userRole :", userRole);
 
         window.location.href = "/presenatation";
       } else {

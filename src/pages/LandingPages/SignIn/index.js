@@ -10,31 +10,28 @@ import MuiLink from "@mui/material/Link";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import GitHubIcon from "@mui/icons-material/GitHub";
 import GoogleIcon from "@mui/icons-material/Google";
-//import axios from "axios";
+import axios from "axios";
 import routesNavbar from "../../../routesNavbar";
 import Cookies from "js-cookie";
-import { not_authenticated } from "../../../generic/generic_functions/authenticated";
-import { useNavigate } from "react-router";
+//import { not_authenticated } from "../../../generic/generic_functions/authenticated";
+//import jwt_decode from "jwt-decode";
+//import { useNavigate } from "react-router";
 
 const SignInBasic = () => {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
+
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
+
   const handleSubmit = async (event) => {
     event.preventDefault(); // Prevent the default form submission
 
     try {
-      const response = await fetch("http://localhost:3001/user/login", {
-        method: "POST",
-        body: JSON.stringify(formData), // Convert the formData to JSON
-        headers: {
-          "Content-Type": "application/json", // Set the Content-Type header to application/json
-        },
-      });
+      const response = await axios.post("http://localhost:3001/user/login", formData);
 
       // Check the status code of the response
       if (response.status === 404) {
@@ -42,12 +39,18 @@ const SignInBasic = () => {
       } else if (response.status === 400) {
         console.log("Email must be a valid email");
       } else if (response.status === 201) {
-        const responseBody = await response.clone().json();
-        const { access_token } = responseBody;
+        const { access_token } = response.data;
         console.log("Access Token:", access_token);
         Cookies.set("token", access_token);
-        let navigate = useNavigate();
-        navigate("/presentation");
+        // const decodedToken = jwt_decode(Cookies.get("token"));
+        // const isAuthenticated = decodedToken.authenticated;
+        // const userId = decodedToken.id;
+        // const userRole = decodedToken.role;
+        // console.log("Authenticated :", isAuthenticated);
+        // console.log("userId :", userId);
+        // console.log("userRole :", userRole);
+
+        window.location.href = "/presenatation";
       } else {
         console.log("Unexpected response status:", response.status);
       }
@@ -56,7 +59,8 @@ const SignInBasic = () => {
       console.log(error);
     }
   };
-  not_authenticated();
+
+  // not_authenticated();
   return (
     <>
       <DefaultNavbar routes={routesNavbar} transparent light />

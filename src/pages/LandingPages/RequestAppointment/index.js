@@ -8,11 +8,14 @@ import {
   Paper,
   Divider,
   makeStyles,
+  TextField,
+  Button,
 } from "@material-ui/core";
 import DefaultNavbar from "../../../examples/Navbars/DefaultNavbar";
 import routesNavbar from "../../../routesNavbar";
 import { AcceptButton, DeclineButton } from "../../../components/AcceptDeclineButton";
-import axios from "axios";
+//import axios from "axios";
+
 const useStyles = makeStyles((theme) => ({
   paper: {
     padding: theme.spacing(2),
@@ -42,43 +45,67 @@ let appointments = [
 function RequestAppointment() {
   const classes = useStyles();
   const [selectedAppointment, setSelectedAppointment] = useState(null);
-
+  const [formData, setFormData] = useState({
+    date: "",
+    time: "",
+    accepted: 0,
+  });
+  const handleAcceptButtonClick = () => {
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      accepted: 1,
+    }));
+  };
   const handleAppointmentClick = (appointment) => {
     setSelectedAppointment(appointment);
   };
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+  const handleConfirmButtonClick = () => {
+    const selectedDate = formData.date;
+    const selectedTime = formData.time;
 
-  const handleAcceptButtonClick = () => {
-    // Handle accepting the request here
+    // Perform any necessary actions with the selected date and time
+    console.log("Selected Date:", selectedDate);
+    console.log("Selected Time:", selectedTime);
 
-    const selectedDate = window.prompt("Select date (YYYY-MM-DD):");
-    const selectedTime = window.prompt("Select time (HH:MM):");
+    // Prepare the data for the POST request
+    const requestData = {
+      date: selectedDate,
+      time: selectedTime,
+    };
 
-    const regexPattern = new RegExp("^\\d{4}\\-(0?[1-9]|1[012])\\-(0?[1-9]|[12][0-9]|3[01])$");
-
-    const regexPattern1 = new RegExp("^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$");
-
-    const validdate = regexPattern.test(selectedDate);
-    const validTime = regexPattern1.test(selectedTime);
-    if (!selectedDate || !selectedTime || !validdate || !validTime) {
-      return;
+    if (requestData.date && requestData.time) {
+      console.log(requestData);
+      formData.accepted = 0;
+      formData.date = "";
+      formData.time = "";
+      setSelectedAppointment(null);
+      appointments = appointments.filter(
+        (appointment) => appointment.id !== selectedAppointment.id
+      );
     }
 
-    const updatedAppointment = { ...selectedAppointment, selectedDate, selectedTime };
-
-    appointments = appointments.filter((appointment) => appointment.id !== selectedAppointment.id);
-
-    axios
-      .put(`/api/appointments/${selectedAppointment.id}`, updatedAppointment)
-      .then((response) => {
-        // Handle the response here
-        console.log(response);
-      })
-      .catch((error) => {
-        // Handle errors here
-        console.log(error);
-      });
-
-    setSelectedAppointment(null);
+    // // Send a POST request to the server with the updated data
+    // axios
+    //   .post("/api/appointments", requestData)
+    //   .then((response) => {
+    //     // Handle the response here
+    //     console.log(response);
+    //
+    //     // Clear the form data and reset the selected appointment
+    //     setFormData({
+    //       date: "",
+    //       time: "",
+    //     });
+    //     formData.accepted = 0;
+    //     setSelectedAppointment(null);
+    //   })
+    //   .catch((error) => {
+    //     // Handle errors here
+    //     console.log(error);
+    //   });
   };
 
   const handleDeclineButtonClick = () => {
@@ -86,16 +113,16 @@ function RequestAppointment() {
     appointments = appointments.filter((appointment) => appointment.id !== selectedAppointment.id);
 
     // Send a DELETE request to the backend to delete the request
-    axios
-      .delete(`/api/appointments/${selectedAppointment.id}`)
-      .then((response) => {
-        // Handle the response here
-        console.log(response);
-      })
-      .catch((error) => {
-        // Handle errors here
-        console.log(error);
-      });
+    // axios
+    //   .delete(`/api/appointments/${selectedAppointment.id}`)
+    //   .then((response) => {
+    //     // Handle the response here
+    //     console.log(response);
+    //   })
+    //   .catch((error) => {
+    //     // Handle errors here
+    //     console.log(error);
+    //   });
 
     // Deselect the selected appointment
     setSelectedAppointment(null);
@@ -135,10 +162,49 @@ function RequestAppointment() {
               <Divider />
               <Typography variant="subtitle1">Time: {selectedAppointment.date}</Typography>
               <Typography variant="subtitle1">Location: {selectedAppointment.email}</Typography>
-              <div>
-                <AcceptButton onClick={handleAcceptButtonClick} />
+              <div style={{ marginTop: "16px", marginBottom: "16px" }}>
+                <AcceptButton onClick={handleAcceptButtonClick} />{" "}
                 <DeclineButton onClick={handleDeclineButtonClick} />
               </div>
+              {formData.accepted === 1 && (
+                <Grid item xs={12} style={{ marginTop: "16px" }}>
+                  <TextField
+                    required
+                    id="date"
+                    name="date"
+                    label="Date"
+                    fullWidth
+                    type="date"
+                    InputLabelProps={{
+                      shrink: true,
+                    }}
+                    value={formData.date}
+                    onChange={handleChange}
+                  />
+                  <TextField
+                    required
+                    id="time"
+                    name="time"
+                    label="Time"
+                    fullWidth
+                    type="time"
+                    InputLabelProps={{
+                      shrink: true,
+                    }}
+                    value={formData.time}
+                    onChange={handleChange}
+                    style={{ marginTop: "16px" }}
+                  />
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={handleConfirmButtonClick}
+                    style={{ marginTop: "16px" }}
+                  >
+                    Confirm
+                  </Button>
+                </Grid>
+              )}
             </Paper>
           ) : (
             <Paper className={classes.paper}>

@@ -26,6 +26,7 @@ import MKButton from "../../../components/MKButton";
 //import PropTypes from "prop-types";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
+import { attributes } from "../../../generic/generic_functions/authenticated";
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -62,6 +63,40 @@ function Profile() {
 
     fetchDoctor(id);
   }, []);
+
+  const [buttonDisabled, setButtonDisabled] = useState(false);
+  const [buttonText, setButtonText] = useState("Make an appointment");
+
+  const handleClick = () => {
+    const attributesData = attributes();
+    const isAuthenticated = attributesData.authenticated;
+    //const userId = attributesData.user_id;
+    const role = attributesData.role;
+    if (!isAuthenticated) {
+      window.location.href = "/pages/authentication/sign-in";
+    }
+    if (role === "patient") {
+      // Disable the button and update the text
+      setButtonDisabled(true);
+      setButtonText("Request sent");
+    }
+
+    // Prepare the data for the POST request
+    // const requestData = {
+    //   // Add any necessary data here
+    // };
+
+    // Send a POST request to the server with the data
+    // axios.post("/api/request", requestData)
+    //     .then((response) => {
+    //       // Handle the response here
+    //       console.log(response);
+    //     })
+    //     .catch((error) => {
+    //       // Handle errors here
+    //       console.log(error);
+    //     });
+  };
 
   return (
     <>
@@ -134,9 +169,10 @@ function Profile() {
                     variant="gradient"
                     color="#588c7e"
                     style={{ marginTop: "30px", background: "#588c7e" }}
+                    onClick={handleClick}
+                    disabled={buttonDisabled}
                   >
-                    {" "}
-                    Make an appointment
+                    {buttonText}
                   </MKButton>
                 </Grid>
               </MKBox>

@@ -13,6 +13,7 @@ import GoogleIcon from "@mui/icons-material/Google";
 import axios from "axios";
 import routesNavbar from "../../../routesNavbar";
 import Cookies from "js-cookie";
+import { not_authenticated } from "../../../generic/generic_functions/authenticated";
 //import { not_authenticated } from "../../../generic/generic_functions/authenticated";
 //import jwt_decode from "jwt-decode";
 //import { useNavigate } from "react-router";
@@ -60,7 +61,7 @@ const SignInBasic = () => {
     }
   };
 
-  // not_authenticated();
+  not_authenticated();
   return (
     <>
       <DefaultNavbar routes={routesNavbar} transparent light />

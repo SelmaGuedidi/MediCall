@@ -54,7 +54,7 @@ const SignUpBasic = () => {
         // let navigate = useNavigate();
         // navigate("/pages/authentication/sign-in");
         console.log(response);
-        window.location.href = "/pages/authentication/sign-in";
+        //window.location.href = "/pages/authentication/sign-in";
       } else {
         console.log("Unexpected response status:", response.status);
         console.log(response);

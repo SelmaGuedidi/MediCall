@@ -14,6 +14,7 @@ import {
 import DefaultNavbar from "../../../examples/Navbars/DefaultNavbar";
 import routesNavbar from "../../../routesNavbar";
 import { AcceptButton, DeclineButton } from "../../../components/AcceptDeclineButton";
+//import { attributes } from "../../../generic/generic_functions/authenticated";
 //import axios from "axios";
 
 const useStyles = makeStyles((theme) => ({
@@ -23,7 +24,13 @@ const useStyles = makeStyles((theme) => ({
     maxWidth: 500,
   },
 }));
-
+//const attributesData = attributes();
+//const isAuthenticated = attributesData.authenticated;
+//const userId = attributesData.user_id;
+//const role = attributesData.role;
+// if (!isAuthenticated || role !== "doctor") {
+//   window.location.href = "/pages/authentication/sign-in";
+// }
 let appointments = [
   {
     id: 1,

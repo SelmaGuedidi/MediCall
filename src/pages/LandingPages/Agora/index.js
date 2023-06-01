@@ -4,7 +4,7 @@ const rtcProps = {
   appId: "ba5ba81ef7c841ab91c83cb9d992e832",
   channel: "demo", // your agora channel
   token:
-    "007eJxTYLjIIbeoPUyC/5hLGUOWx6urm5/n1s18ZHXo8l5hQ3/R95YKDEmJpkmJFoapaebJFiaGiUmWhskWxslJlimWlkapFsZGbFLlKQ2BjAwzds5iZGSAQBCfhSElNTefgQEADgwejA==", // use null or skip if using app in testing mode
+    "007eJxTYLiameYWP/mSIpPT5ImnRFcYvrv3YyJviL9xquX8b1POpWspMCQlmiYlWhimppknW5gYJiZZGiZbGCcnWaZYWhqlWhgbLd5TkdIQyMiwteE5KyMDBIL4LAwpqbn5DAwAYYUgZA==", // use null or skip if using app in testing mode
 };
 function Agora() {
   const [videoCall, setVideoCall] = useState(true);

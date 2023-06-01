@@ -42,7 +42,7 @@ function ProfileUser() {
   useEffect(() => {
     const location = useLocation();
     const { userId } = location.state;
-    const fetchUser = async () => {
+    const fetchUser = async (userId) => {
       try {
         const res = await axios.get(`http://localhost:3001/user/${userId}`);
         console.log("Response", res);
@@ -52,7 +52,7 @@ function ProfileUser() {
       }
     };
 
-    fetchUser();
+    fetchUser(userId);
   }, []);
 
   const handleClick = () => {};

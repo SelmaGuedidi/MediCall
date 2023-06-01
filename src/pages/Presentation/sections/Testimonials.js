@@ -53,26 +53,27 @@ function Information() {
         <Grid container spacing={3} sx={{ mt: 8 }}>
           <Grid item xs={12} md={6} lg={4}>
             <DefaultReviewCard
-              name="Nick Willever"
+              name="Mouna Slimane"
               date="1 day ago"
-              review="This is an excellent product, the documentation is excellent and helped me get things done more efficiently."
+              review="Using MediCall has been a wonderful experience. The platform offers a wide range of specialists, allowing me to consult with doctors across various medical fields. It has been incredibly helpful for managing my chronic condition, providing me with timely and personalized care without the need for in-person visits."
               rating={5}
             />
           </Grid>
           <Grid item xs={12} md={6} lg={4}>
             <DefaultReviewCard
               color="info"
-              name="Shailesh Kushwaha"
+              name="Rami Helmi"
               date="1 week ago"
-              review="I found solution to all my design needs from Creative Tim. I use them as a freelancer in my hobby projects for fun! And its really affordable, very humble guys !!!"
+              review="I highly recommend MediCall to anyone in need of medical consultations. The platform is user-friendly, and scheduling appointments is a breeze. The doctors are professional, and I appreciate the ease of discussing my health concerns through video calls. It's a reliable and efficient teleconsultation solution."
               rating={5}
+              style={{ background: "#588c7e" }}
             />
           </Grid>
           <Grid item xs={12} md={6} lg={4}>
             <DefaultReviewCard
-              name="Samuel Kamuli"
+              name="Insaf kammoun"
               date="3 weeks ago"
-              review="Great product. Helped me cut the time to set up a site. I used the components within instead of starting from scratch. I highly recommend for developers who want to spend more time on the backend!."
+              review="I am extremely satisfied with the services provided by MediCall. The teleconsultation feature has been a lifeline for me, especially during the current pandemic. The platform's secure and confidential communication ensures my privacy, and the doctors have been prompt in addressing my concerns and providing appropriate guidance."
               rating={5}
             />
           </Grid>

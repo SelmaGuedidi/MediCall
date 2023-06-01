@@ -100,6 +100,7 @@ function Profile() {
               <MKBox
                 variant="gradient"
                 bgColor="info"
+                style={{ background: "#588c7e" }}
                 coloredShadow="success"
                 borderRadius="lg"
                 p={2}
@@ -129,7 +130,11 @@ function Profile() {
                   </MKTypography>
                 </Grid>
                 <Grid container item justifyContent="center" xs={12} mt={5} mb={2}>
-                  <MKButton variant="gradient" color="info" style={{ marginTop: "30px" }}>
+                  <MKButton
+                    variant="gradient"
+                    color="#588c7e"
+                    style={{ marginTop: "30px", background: "#588c7e" }}
+                  >
                     {" "}
                     Make an appointment
                   </MKButton>

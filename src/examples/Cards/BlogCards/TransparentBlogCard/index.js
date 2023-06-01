@@ -53,7 +53,8 @@ function TransparentBlogCard({ image, title, description, action }) {
         alt={title}
         borderRadius="lg"
         shadow="md"
-        width="100%"
+        width="300px"
+        height="200px"
         position="relative"
         zIndex={1}
       />

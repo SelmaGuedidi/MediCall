@@ -64,6 +64,7 @@ function ContactUs() {
           xl={4}
           ml={{ xs: "auto", lg: 6 }}
           mr={{ xs: "auto", lg: 6 }}
+          sx={{ marginTop: "50px" }}
         >
           <MKBox
             bgColor="white"

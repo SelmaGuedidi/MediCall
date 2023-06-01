@@ -65,7 +65,6 @@ function ProfileUser() {
         console.log("Error:", error);
       }
     };
-
     fetchUser();
   }, [id]);
   const handleClick = () => {};

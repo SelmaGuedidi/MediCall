@@ -25,9 +25,9 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const appointments = [
-  { id: 1, date: "2023-05-12", time: "10:00 AM", location: "New York" },
-  { id: 2, date: "2023-05-13", time: "2:00 PM", location: "Los Angeles" },
-  { id: 3, date: "2023-05-14", time: "4:00 PM", location: "Chicago" },
+  { id: 1, date: "2023-05-12", time: "10:00 AM" },
+  { id: 2, date: "2023-05-13", time: "2:00 PM" },
+  { id: 3, date: "2023-05-14", time: "4:00 PM" },
 ];
 
 function MySpace() {

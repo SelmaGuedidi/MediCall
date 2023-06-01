@@ -17,7 +17,6 @@ Coded by www.creative-tim.com
 //import Grid from "@mui/material/Grid";
 
 // Material Kit 2 React components
-import MKBox from "components/MKBox";
 //import MKInput from "components/MKInput";
 //import MKButton from "components/MKButton";
 //import MKTypography from "components/MKTypography";
@@ -37,9 +36,7 @@ import routesNavbar from "../../../routesNavbar";
 function MakeAnAppointment() {
   return (
     <>
-      <MKBox position="fixed" top="0.5rem" width="100%">
-        <DefaultNavbar routes={routesNavbar} />
-      </MKBox>
+      <DefaultNavbar routes={routesNavbar} />
       <DesignBlocks />
     </>
   );

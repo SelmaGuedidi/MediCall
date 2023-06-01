@@ -31,7 +31,7 @@ import DefaultNavbar from "examples/Navbars/DefaultNavbar";
 // Presentation page sections
 //import Counters from "pages/Presentation/sections/Counters";
 //import Information from "pages/Presentation/sections/Information";
-import DesignBlocks from "pages/Presentation/sections/DesignBlocks";
+//import DesignBlocks from "pages/Presentation/sections/DesignBlocks";
 //import Pages from "pages/Presentation/sections/Pages";
 import Testimonials from "pages/Presentation/sections/Testimonials";
 //import Download from "pages/Presentation/sections/Download";
@@ -45,6 +45,8 @@ import Testimonials from "pages/Presentation/sections/Testimonials";
 // Images
 import bgImage from "assets/images/medical.png";
 import routesNavbar from "../../routesNavbar";
+import Posts from "../LandingPages/Author/sections/Posts";
+import Featuring from "../LandingPages/AboutUs/sections/Featuring";
 
 function Presentation() {
   return (
@@ -61,6 +63,7 @@ function Presentation() {
           backgroundRepeat: "no-repeat",
           display: "grid",
           placeItems: "center",
+          marginBottom: "100px",
         }}
       >
         <Container>
@@ -82,7 +85,8 @@ function Presentation() {
         </Container>
         {/* eslint-disable-next-line react/jsx-no-comment-textnodes */}
       </MKBox>
-      <DesignBlocks />
+      <Posts />
+      <Featuring />
       <Testimonials />
       <MKBox pt={18} pb={6}>
         <Container>

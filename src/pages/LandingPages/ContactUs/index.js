@@ -64,6 +64,7 @@ function ContactUs() {
           xl={4}
           ml={{ xs: "auto", lg: 6 }}
           mr={{ xs: "auto", lg: 6 }}
+          sx={{ marginTop: "50px" }}
         >
           <MKBox
             bgColor="white"
@@ -78,14 +79,15 @@ function ContactUs() {
           >
             <MKBox
               variant="gradient"
-              bgColor="info"
+              bgColor="success"
               coloredShadow="info"
               borderRadius="lg"
               p={2}
               mx={2}
               mt={-3}
+              style={{ background: "#588c7e" }}
             >
-              <MKTypography variant="h3" color="white">
+              <MKTypography variant="h3" color="white" textAlign="center">
                 ContactUs
               </MKTypography>
             </MKBox>
@@ -123,7 +125,12 @@ function ContactUs() {
                   </Grid>
                 </Grid>
                 <Grid container item justifyContent="center" xs={12} mt={5} mb={2}>
-                  <MKButton type="submit" variant="gradient" color="info">
+                  <MKButton
+                    type="submit"
+                    variant="gradient"
+                    color="success"
+                    style={{ background: "#588c7e" }}
+                  >
                     Send Message
                   </MKButton>
                 </Grid>

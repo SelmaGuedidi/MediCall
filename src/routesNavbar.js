@@ -18,6 +18,7 @@ import SignOut from "layouts/pages/authentication/sign-out";
 //import Cookies from "js-cookie";
 import RequestAppointment from "./pages/LandingPages/RequestAppointment";
 import AboutUs from "./pages/LandingPages/AboutUs";
+import ProfileUser from "./pages/LandingPages/ProfileUser";
 import { attributes } from "./generic/generic_functions/authenticated";
 
 // const isAuthenticated = Cookies.get("authenticated");
@@ -47,6 +48,11 @@ const routesNavbar = [
         name: "sign out",
         route: "/pages/authentication/sign-out",
         component: <SignOut />,
+      },
+      isAuthenticated && {
+        name: "profile",
+        route: "/pages/landing-pages/profile",
+        component: <ProfileUser />,
       },
     ].filter(Boolean),
   },

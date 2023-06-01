@@ -13,9 +13,10 @@ import DefaultNavbar from "../../../examples/Navbars/DefaultNavbar";
 import routesNavbar from "../../../routesNavbar";
 import MKButton from "../../../components/MKButton";
 import Icon from "@mui/material/Icon";
-import { authenticated } from "../../../generic/generic_functions/authenticated";
+import { attributes, authenticated } from "../../../generic/generic_functions/authenticated";
 
 authenticated();
+
 const useStyles = makeStyles((theme) => ({
   paper: {
     padding: theme.spacing(2),
@@ -23,13 +24,20 @@ const useStyles = makeStyles((theme) => ({
     maxWidth: 500,
   },
 }));
-
-const appointments = [
-  { id: 1, date: "2023-05-12", time: "10:00 AM" },
-  { id: 2, date: "2023-05-13", time: "2:00 PM" },
-  { id: 3, date: "2023-05-14", time: "4:00 PM" },
-];
-
+const attributesData = attributes();
+//const isAuthenticated = attributesData.authenticated;
+//const userId = attributesData.user_id;
+const role = attributesData.role;
+let appointments = [];
+if (role === "doctor") {
+  appointments = [
+    { id: 1, date: "2023-01-06", time: "6:00 PM", FirstName: "Foulen", LastName: "Ben foulen" },
+  ];
+} else {
+  appointments = [
+    { id: 1, date: "2023-01-06", time: "6:00 PM", FirstName: "Fehmi", LastName: "Touzani" },
+  ];
+}
 function MySpace() {
   const classes = useStyles();
   const [selectedAppointment, setSelectedAppointment] = useState(null);
@@ -54,10 +62,7 @@ function MySpace() {
                   selected={selectedAppointment?.id === appointment.id}
                   onClick={() => handleAppointmentClick(appointment)}
                 >
-                  <ListItemText
-                    primary={appointment.date}
-                    secondary={`${appointment.time} @ ${appointment.location}`}
-                  />
+                  <ListItemText primary={appointment.date} secondary={appointment.time} />
                 </ListItem>
               ))}
             </List>
@@ -67,11 +72,12 @@ function MySpace() {
           {selectedAppointment ? (
             <Paper className={classes.paper}>
               <Typography variant="h6">
-                Appointment Details for {selectedAppointment.date}
+                Appointment Details for{" "}
+                {`${selectedAppointment.FirstName} ${selectedAppointment.LastName}`}
               </Typography>
               <Divider />
-              <Typography variant="subtitle1">Time: {selectedAppointment.time}</Typography>
-              <Typography variant="subtitle1">Location: {selectedAppointment.location}</Typography>
+              <Typography variant="subtitle1">Time: {selectedAppointment.date}</Typography>
+              <Typography variant="subtitle1">Location: {selectedAppointment.time}</Typography>
               <MKButton
                 type="submit"
                 variant="gradient"

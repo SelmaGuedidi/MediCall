@@ -15,13 +15,19 @@ import MakeAnAppointment from "./pages/LandingPages/MakeAnAppointment";
 import SignUp from "./pages/LandingPages/SignUp";
 import NotificationCenter from "./pages/LandingPages/MySpace";
 import SignOut from "layouts/pages/authentication/sign-out";
-import Cookies from "js-cookie";
+//import Cookies from "js-cookie";
 import RequestAppointment from "./pages/LandingPages/RequestAppointment";
 import AboutUs from "./pages/LandingPages/AboutUs";
+import { attributes } from "./generic/generic_functions/authenticated";
 
-const isAuthenticated = Cookies.get("authenticated");
-const role = Cookies.get("role");
+// const isAuthenticated = Cookies.get("authenticated");
+// const role = Cookies.get("role");
 
+const attributesData = attributes();
+const isAuthenticated = attributesData.authenticated;
+//const userId = attributesData.user_id;
+const role = attributesData.role;
+//console.log(userId);
 const routesNavbar = [
   {
     name: "account",
@@ -55,7 +61,7 @@ const routesNavbar = [
     component: role === "doctor" ? <RequestAppointment /> : <MakeAnAppointment />,
   },
 
-  {
+  isAuthenticated && {
     name: "My Space",
     icon: <Icon>article</Icon>,
     route: "/pages/landing-pages/MySpace",

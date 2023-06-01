@@ -13,7 +13,9 @@ import DefaultNavbar from "../../../examples/Navbars/DefaultNavbar";
 import routesNavbar from "../../../routesNavbar";
 import MKButton from "../../../components/MKButton";
 import Icon from "@mui/material/Icon";
+import { authenticated } from "../../../generic/generic_functions/authenticated";
 
+authenticated();
 const useStyles = makeStyles((theme) => ({
   paper: {
     padding: theme.spacing(2),

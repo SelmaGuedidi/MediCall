@@ -51,7 +51,7 @@ function MySpace() {
       try {
         const response = await axios.get(`http://localhost:3001/consultation/accepted/${userId}`);
         setAppointments(response.data);
-        console.log(appointments);
+        console.log("Appointments:", appointments);
       } catch (error) {
         console.log("Error fetching appointments:", error);
       }
@@ -70,12 +70,12 @@ function MySpace() {
             <List>
               {appointments.map((appointment) => (
                 <ListItem
-                  key={appointment.id}
+                  key={appointment.c_id}
                   button
-                  selected={selectedAppointment?.id === appointment.id}
+                  selected={selectedAppointment?.c_id === appointment.c_id}
                   onClick={() => handleAppointmentClick(appointment)}
                 >
-                  <ListItemText primary={appointment.date} secondary={appointment.time} />
+                  <ListItemText primary={appointment.c_date} secondary={appointment.time} />
                 </ListItem>
               ))}
             </List>
@@ -90,10 +90,10 @@ function MySpace() {
               </Typography>
               <Divider />
               <Typography variant="subtitle1">
-                Date: {selectedAppointment.date.slice(0, 10)}
+                Date: {selectedAppointment.c_date.slice(0, 10)}
               </Typography>
               <Typography variant="subtitle1">
-                Time: {selectedAppointment.date.slice(11, 19)}
+                {/*Time: {selectedAppointment.date.slice(11, 19)}*/}
               </Typography>
               <MKButton
                 type="submit"

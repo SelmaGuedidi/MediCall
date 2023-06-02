@@ -94,19 +94,21 @@ function MySpace() {
             <Typography variant="h6">Appointments</Typography>
             <Divider />
             <List>
-              {appointments.map((appointment) => (
-                <ListItem
-                  key={appointment.c_id}
-                  button
-                  selected={selectedAppointment?.c_id === appointment.c_id}
-                  onClick={() => handleAppointmentClick(appointment)}
-                >
-                  <ListItemText
-                    primary={appointment.c_date.slice(0, 10)}
-                    secondary={appointment.c_date.slice(11, 16)}
-                  />
-                </ListItem>
-              ))}
+              {appointments
+                .map((appointment) => (
+                  <ListItem
+                    key={appointment.c_id}
+                    button
+                    selected={selectedAppointment?.c_id === appointment.c_id}
+                    onClick={() => handleAppointmentClick(appointment)}
+                  >
+                    <ListItemText
+                      primary={appointment.c_date.slice(0, 10)}
+                      secondary={appointment.c_date.slice(11, 16)}
+                    />
+                  </ListItem>
+                ))
+                .sort((a, b) => a.c_date <= b.c_date)}
             </List>
           </Paper>
         </Grid>

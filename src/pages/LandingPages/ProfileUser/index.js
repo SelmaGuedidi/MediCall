@@ -54,10 +54,14 @@ function ProfileUser() {
   //
   //   fetchUser(userId);
   // }, [isAuthenticated, userId]);
+  let profile = "user";
+  if (role === "doctor") {
+    profile = "doctor";
+  }
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const response = await axios.get(`http://localhost:3001/user/${id}`);
+        const response = await axios.get(`http://localhost:3001/${profile}/${id}`);
         const userData = response.data;
         console.log(userData);
         setDoctor(response.data);

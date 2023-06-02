@@ -31,6 +31,7 @@ function ProfileUser() {
   const attributesData = attributes();
   //const isAuthenticated = attributesData.authenticated;
   const id = attributesData.user_id;
+  const role = attributesData.role;
   console.log(id);
   const classes = useStyles();
   console.log(classes);
@@ -68,6 +69,31 @@ function ProfileUser() {
     fetchUser();
   }, [id]);
   const handleClick = () => {};
+  const [showConfirmation, setShowConfirmation] = useState(false);
+
+  const handleDelete = () => {
+    setShowConfirmation(true);
+    console.log(role);
+    console.log(id);
+  };
+
+  const handleConfirmation = () => {
+    // Send a DELETE request to the backend
+    if (showConfirmation) {
+      axios
+        .delete(`http://localhost:3001/${role}/${id}`)
+        .then((response) => {
+          // Handle the response here
+
+          window.location.href = " /pages/authentication/sign-out";
+          console.log(response);
+        })
+        .catch((error) => {
+          // Handle errors here
+          console.log(error);
+        });
+    }
+  };
   return (
     <>
       <DefaultNavbar routes={routesNavbar} />
@@ -123,26 +149,66 @@ function ProfileUser() {
                 </MKTypography>
               </MKBox>
               <MKBox p={3}>
-                <Grid container item justifyContent="center" xs={12} mt={5} mb={2}>
-                  <MKButton
-                    variant="gradient"
-                    color="#588c7e"
-                    style={{ marginTop: "30px", background: "#588c7e" }}
-                    onClick={handleClick}
-                  >
-                    Edit profile
-                  </MKButton>
+                <Grid container item justifyContent="center" xs={12} mt={5} mb={2} spacing={2}>
+                  <Grid item>
+                    <MKButton
+                      variant="gradient"
+                      color="warning"
+                      style={{ marginTop: "30px", background: "#FFD700" }}
+                      onClick={handleClick}
+                    >
+                      Edit profile
+                    </MKButton>
+                  </Grid>
+                  <Grid item>
+                    <MKButton
+                      variant="gradient"
+                      color="danger"
+                      style={{ marginTop: "30px", background: "#FF0000" }}
+                      onClick={handleDelete}
+                    >
+                      Delete profile
+                    </MKButton>
+                  </Grid>
                 </Grid>
-                <Grid container item justifyContent="center" xs={12} mt={5} mb={2}>
-                  <MKButton
-                    variant="gradient"
-                    color="danger"
-                    style={{ marginTop: "30px", background: "#588c7e" }}
-                    onClick={handleClick}
-                  >
-                    Delete profile
-                  </MKButton>
-                </Grid>
+                {/* Display confirmation message */}
+                {showConfirmation && (
+                  <div>
+                    <MKBox p={3}>
+                      <p>You sure you want to delete your profile ?</p>
+                      <Grid
+                        container
+                        item
+                        justifyContent="center"
+                        xs={12}
+                        mt={5}
+                        mb={2}
+                        spacing={2}
+                      >
+                        <Grid item>
+                          <MKButton
+                            variant="gradient"
+                            color="danger"
+                            style={{ marginTop: "30px", background: "#FFD700" }}
+                            onClick={handleConfirmation}
+                          >
+                            Yes
+                          </MKButton>
+                        </Grid>
+                        <Grid item>
+                          <MKButton
+                            variant="gradient"
+                            color="blue"
+                            style={{ marginTop: "30px", background: "#FF0000" }}
+                            onClick={() => setShowConfirmation(false)}
+                          >
+                            No
+                          </MKButton>
+                        </Grid>
+                      </Grid>
+                    </MKBox>
+                  </div>
+                )}
               </MKBox>
             </MKBox>
           </Grid>

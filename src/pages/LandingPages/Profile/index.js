@@ -53,26 +53,23 @@ function Profile() {
   //const isAuthenticated = attributesData.authenticated;
   const userId = attributesData.user_id;
   const [appointment, setAppointment] = useState([]);
-  const requestdata = {
-    doctor: id,
-    patient: userId,
-  };
+  // const requestdata = {
+  //   doctor: id,
+  //   patient: userId,
+  // };
   useEffect(() => {
     const fetchAppointment = async () => {
       try {
-        const res = await axios.get(
-          `http://localhost:3001/consultation//docteranduser`,
-          requestdata
-        );
+        const res = await axios.get(`http://localhost:3001/consultation/${id}/${userId}`);
         console.log(res);
         setAppointment(res.data);
-        console.log(appointment);
+        console.log("Appointment :", appointment);
       } catch (err) {
         console.log(err);
       }
     };
 
-    fetchAppointment(id);
+    fetchAppointment();
   }, []);
 
   const [buttonDisabled, setButtonDisabled] = useState(false);
@@ -90,23 +87,24 @@ function Profile() {
       // Disable the button and update the text
       setButtonDisabled(true);
       setButtonText("Request sent");
+      // Prepare the data for the POST request
+      const requestData = {
+        doctor: id,
+        patient: userId,
+      };
+
+      //  Send a POST request to the server with the data
+      axios
+        .post(`http://localhost:3001/consultation`, requestData)
+        .then((response) => {
+          // Handle the response here
+          console.log(response);
+        })
+        .catch((error) => {
+          // Handle errors here
+          console.log(error);
+        });
     }
-
-    // Prepare the data for the POST request
-    // const requestData = {
-    //   // Add any necessary data here
-    // };
-
-    // Send a POST request to the server with the data
-    // axios.post("/api/request", requestData)
-    //     .then((response) => {
-    //       // Handle the response here
-    //       console.log(response);
-    //     })
-    //     .catch((error) => {
-    //       // Handle errors here
-    //       console.log(error);
-    //     });
   };
 
   return (

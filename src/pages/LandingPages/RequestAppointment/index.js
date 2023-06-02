@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import {
   List,
   ListItem,
@@ -37,6 +37,8 @@ const userId = attributesData.user_id;
 function RequestAppointment() {
   const classes = useStyles();
   const [selectedAppointment, setSelectedAppointment] = useState(null);
+  const [selectedDoctor, setSelectedDoctor] = useState(null);
+  const [appointments, setAppointments] = useState([]);
   const [formData, setFormData] = useState({
     date: "",
     time: "",
@@ -54,9 +56,6 @@ function RequestAppointment() {
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
-  let [appointments, setAppointments] = useState([]);
-
-  let [selectedDoctor, setSelectedDoctor] = useState(null);
 
   useEffect(() => {
     const fetchAppointments = async () => {
@@ -149,6 +148,7 @@ function RequestAppointment() {
         const response = await axios.get(`http://localhost:3001/user/${id}`);
         setSelectedDoctor(response.data);
         console.log(response.data);
+        console.log("user", selectedDoctor);
       } catch (error) {
         console.log("Error fetching doctor:", error);
       }
@@ -175,27 +175,23 @@ function RequestAppointment() {
                   selected={selectedAppointment?.c_id === appointment.c_id}
                   onClick={() => handleAppointmentClick(appointment)}
                 >
-                  <ListItemText
-                    primary={`${selectedDoctor.firstname} ${selectedDoctor.lastname}`}
-                    secondary={`${appointment.DateOfbirth} ${appointment.c_email}`}
-                  />
+                  <ListItemText primary={"Appointment"} />
                 </ListItem>
               ))}
             </List>
           </Paper>
         </Grid>
         <Grid item xs={5} style={{ marginTop: "160px" }}>
-          {selectedAppointment ? (
+          {selectedAppointment && selectedDoctor ? (
             <Paper className={classes.paper}>
               <Typography variant="h6">
-                Request Details for{" "}
-                {`${selectedDoctor.firstname} ${selectedAppointment.c_patientId}`}
+                Appointment Details for {`${selectedDoctor.firstname} ${selectedDoctor.lastname}`}
               </Typography>
               <Divider />
               <Typography variant="subtitle1">
-                Date of birth: {selectedAppointment.c_patientId}
+                Date of birth: {selectedDoctor.birthdate.slice(0, 10)}
               </Typography>
-              <Typography variant="subtitle1">Email: {selectedAppointment.c_patientId}</Typography>
+              <Typography variant="subtitle1">Email: {selectedDoctor.email}</Typography>
               <div style={{ marginTop: "16px", marginBottom: "16px" }}>
                 <AcceptButton onClick={handleAcceptButtonClick} />{" "}
                 <DeclineButton onClick={handleDeclineButtonClick} />

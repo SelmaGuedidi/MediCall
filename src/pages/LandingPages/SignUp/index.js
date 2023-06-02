@@ -47,9 +47,10 @@ const SignUpBasic = () => {
       });
 
       // Check the status code of the response
-      if (response.status / 100 === 404) {
-        console.log("Error");
+      if (Math.floor(response.status / 100) === 4) {
+        console.log("Error :");
         console.log(response);
+        console.log(formData);
       } else if (response.status === 201) {
         // let navigate = useNavigate();
         // navigate("/pages/authentication/sign-in");
@@ -216,7 +217,7 @@ const SignUpBasic = () => {
                           required
                         >
                           <FormControlLabel value="doctor" control={<Radio />} label="Doctor" />
-                          <FormControlLabel value="patient" control={<Radio />} label="Patient" />
+                          <FormControlLabel value="user" control={<Radio />} label="Patient" />
                         </RadioGroup>
                       </FormControl>
                     </Grid>

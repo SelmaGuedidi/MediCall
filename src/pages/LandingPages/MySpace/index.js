@@ -13,6 +13,7 @@ import DefaultNavbar from "../../../examples/Navbars/DefaultNavbar";
 import routesNavbar from "../../../routesNavbar";
 import MKButton from "../../../components/MKButton";
 import Icon from "@mui/material/Icon";
+import { Link } from "react-router-dom";
 import { attributes, authenticated } from "../../../generic/generic_functions/authenticated";
 import axios from "axios";
 
@@ -122,16 +123,14 @@ function MySpace() {
               <Typography variant="subtitle1">
                 Time: {selectedAppointment.c_date.slice(11, 16)}
               </Typography>
-              <MKButton
-                type="submit"
-                variant="gradient"
-                color="info"
-                onClick={() =>
-                  window.location.replace("http://localhost:3000/pages/landing-pages/agora")
-                }
+              <Link
+                to="/pages/landing-pages/agora"
+                state={{ appointment_id: selectedAppointment.c_id }}
               >
-                <Icon> phone</Icon>
-              </MKButton>
+                <MKButton type="submit" variant="gradient" color="info">
+                  <Icon> phone</Icon>
+                </MKButton>
+              </Link>
             </Paper>
           ) : (
             <Paper className={classes.paper}>

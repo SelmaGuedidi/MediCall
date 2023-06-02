@@ -1,17 +1,32 @@
 import React, { useState } from "react";
 import AgoraUIKit from "agora-react-uikit";
+import axios from "axios";
+import { useLocation } from "react-router-dom";
 const rtcProps = {
-  appId: "ba5ba81ef7c841ab91c83cb9d992e832",
+  appId: "fbc881668b3f40fda8550f47004670fd",
   channel: "demo", // your agora channel
   token:
-    "007eJxTYLiameYWP/mSIpPT5ImnRFcYvrv3YyJviL9xquX8b1POpWspMCQlmiYlWhimppknW5gYJiZZGiZbGCcnWaZYWhqlWhgbLd5TkdIQyMiwteE5KyMDBIL4LAwpqbn5DAwAYYUgZA==", // use null or skip if using app in testing mode
+    "007eJxTYHiZ81PgfvZmn4MFT7Kiyp6xtN4UP3jR+76ecZe/aEOYb6ICQ1pSsoWFoZmZRZJxmolBWkqihampQZqJuYGBiZk5kG8sUJXSEMjIIFNUxcLIAIEgPgtDSmpuPgMDAFcaHjs=", // use null or skip if using app in testing mode
 };
 function Agora() {
   const [videoCall, setVideoCall] = useState(true);
+  const location = useLocation();
+  const { appointment_id } = location.state;
   const callbacks = {
     EndCall: () => {
       setVideoCall(false);
-      window.location.replace("http://localhost:3000/pages/landing-pages/MySpace");
+      axios
+        .delete(`http://localhost:3001/consultation/${appointment_id}`)
+        .then((response) => {
+          // Traitement de la réponse ici
+          console.log(response);
+          // Rediriger l'utilisateur vers une autre page ou effectuer d'autres actions
+        })
+        .catch((error) => {
+          // Gérer les erreurs ici
+          console.log(error);
+        });
+      window.location.href = "/pages/landing-pages/MySpace";
     },
   };
   return videoCall ? (

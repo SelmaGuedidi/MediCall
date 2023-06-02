@@ -86,11 +86,15 @@ function MySpace() {
             <Paper className={classes.paper}>
               <Typography variant="h6">
                 Appointment Details for{" "}
-                {`${selectedAppointment.FirstName} ${selectedAppointment.LastName}`}
+                {`${selectedAppointment.firstname} ${selectedAppointment.lastname}`}
               </Typography>
               <Divider />
-              <Typography variant="subtitle1">Date: {selectedAppointment.date}</Typography>
-              <Typography variant="subtitle1">Time: {selectedAppointment.time}</Typography>
+              <Typography variant="subtitle1">
+                Date: {selectedAppointment.date.slice(0, 10)}
+              </Typography>
+              <Typography variant="subtitle1">
+                Time: {selectedAppointment.date.slice(11, 19)}
+              </Typography>
               <MKButton
                 type="submit"
                 variant="gradient"

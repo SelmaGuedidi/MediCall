@@ -20,6 +20,7 @@ import RequestAppointment from "./pages/LandingPages/RequestAppointment";
 import AboutUs from "./pages/LandingPages/AboutUs";
 //import ProfileUser from "./pages/LandingPages/ProfileUser";
 import { attributes } from "./generic/generic_functions/authenticated";
+import ProfileUser from "./pages/LandingPages/ProfileUser";
 
 // const isAuthenticated = Cookies.get("authenticated");
 // const role = Cookies.get("role");
@@ -43,6 +44,11 @@ const routesNavbar = [
         name: "sign up",
         route: "/pages/authentication/sign-up",
         component: <SignUp />,
+      },
+      isAuthenticated && {
+        name: "Profile",
+        route: "/pages/landing-pages/profile-user",
+        component: <ProfileUser />,
       },
       isAuthenticated && {
         name: "sign out",

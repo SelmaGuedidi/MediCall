@@ -2,16 +2,17 @@ import React, { useState } from "react";
 import AgoraUIKit from "agora-react-uikit";
 import axios from "axios";
 import { useLocation } from "react-router-dom";
-const rtcProps = {
-  appId: "fbc881668b3f40fda8550f47004670fd",
-  channel: "demo", // your agora channel
-  token:
-    "007eJxTYHiZ81PgfvZmn4MFT7Kiyp6xtN4UP3jR+76ecZe/aEOYb6ICQ1pSsoWFoZmZRZJxmolBWkqihampQZqJuYGBiZk5kG8sUJXSEMjIIFNUxcLIAIEgPgtDSmpuPgMDAFcaHjs=", // use null or skip if using app in testing mode
-};
+import app_id from "../../../generic/generic_variables";
+
 function Agora() {
   const [videoCall, setVideoCall] = useState(true);
   const location = useLocation();
-  const { appointment_id } = location.state;
+  const { appointment_id, appointment_channel, token_call } = location.state;
+  const rtcProps = {
+    appId: app_id,
+    channel: appointment_channel, // your agora channel
+    token: token_call, // use null or skip if using app in testing mode
+  };
   const callbacks = {
     EndCall: () => {
       setVideoCall(false);

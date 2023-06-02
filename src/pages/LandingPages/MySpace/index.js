@@ -125,7 +125,11 @@ function MySpace() {
               </Typography>
               <Link
                 to="/pages/landing-pages/agora"
-                state={{ appointment_id: selectedAppointment.c_id }}
+                state={{
+                  appointment_id: selectedAppointment.c_id,
+                  appointment_channel: selectedAppointment.c_channel,
+                  token_call: selectedAppointment.c_token,
+                }}
               >
                 <MKButton type="submit" variant="gradient" color="info">
                   <Icon> phone</Icon>

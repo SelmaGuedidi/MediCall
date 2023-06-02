@@ -91,17 +91,12 @@ const SignUpBasic = () => {
     }
   };
 
-
+  not_authenticated();
+  //
   // const handleChange = (e) => {
   //   setFormData({ ...formData, [e.target.name]: e.target.value });
+  //   setFormErrors({ ...formErrors, [e.target.name]: "" }); // Clear the error message when the field value changes
   // };
-
-  not_authenticated();
-
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-    setFormErrors({ ...formErrors, [e.target.name]: "" }); // Clear the error message when the field value changes
-  };
 
   const validateForm = () => {
     const errors = {};

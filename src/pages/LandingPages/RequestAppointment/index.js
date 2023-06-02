@@ -56,6 +56,8 @@ function RequestAppointment() {
   };
   let [appointments, setAppointments] = useState([]);
 
+  let [selectedDoctor, setSelectedDoctor] = useState(null);
+
   useEffect(() => {
     const fetchAppointments = async () => {
       try {
@@ -140,6 +142,23 @@ function RequestAppointment() {
     // Deselect the selected appointment
     setSelectedAppointment(null);
   };
+
+  useEffect(() => {
+    const fetchDoctor = async (id) => {
+      try {
+        const response = await axios.get(`http://localhost:3001/user/${id}`);
+        setSelectedDoctor(response.data);
+        console.log(response.data);
+      } catch (error) {
+        console.log("Error fetching doctor:", error);
+      }
+    };
+
+    if (selectedAppointment) {
+      fetchDoctor(selectedAppointment.c_patientId);
+    }
+  }, [selectedAppointment]);
+
   return (
     <>
       <DefaultNavbar routes={routesNavbar} />
@@ -157,7 +176,7 @@ function RequestAppointment() {
                   onClick={() => handleAppointmentClick(appointment)}
                 >
                   <ListItemText
-                    primary={`${appointment.c_patientId} ${appointment.c_patientId}`}
+                    primary={`${selectedDoctor.firstname} ${selectedDoctor.lastname}`}
                     secondary={`${appointment.DateOfbirth} ${appointment.c_email}`}
                   />
                 </ListItem>
@@ -170,7 +189,7 @@ function RequestAppointment() {
             <Paper className={classes.paper}>
               <Typography variant="h6">
                 Request Details for{" "}
-                {`${selectedAppointment.c_patientId} ${selectedAppointment.c_patientId}`}
+                {`${selectedDoctor.firstname} ${selectedAppointment.c_patientId}`}
               </Typography>
               <Divider />
               <Typography variant="subtitle1">

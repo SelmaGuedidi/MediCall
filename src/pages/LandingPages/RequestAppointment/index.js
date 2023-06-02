@@ -68,6 +68,12 @@ function RequestAppointment() {
     };
     fetchAppointments();
   }, []);
+
+  // useEffect(() => {
+  //   setAppointments(appointments);
+  //   console.log("appointments: ", appointments);
+  // });
+
   const handleConfirmButtonClick = () => {
     const selectedDate = formData.date;
     const selectedTime = formData.time;
@@ -93,7 +99,7 @@ function RequestAppointment() {
       );
       // Send a POST request to the server with the updated data
       axios
-        .patch(`http://localhost:3001/consultation/${selectedAppointment.id}`, requestData)
+        .patch(`http://localhost:3001/consultation/${selectedAppointment.c_id}`, requestData)
         .then((response) => {
           // Handle the response here
           console.log(response);
@@ -116,12 +122,12 @@ function RequestAppointment() {
   const handleDeclineButtonClick = () => {
     // Filter out the selected appointment from the appointments array
     setAppointments(
-      appointments.filter((appointment) => appointment.id !== selectedAppointment.id)
+      appointments.filter((appointment) => appointment.c_id !== selectedAppointment.c_id)
     );
 
     // Send a DELETE request to the backend to delete the request
     axios
-      .delete(`http://localhost:3001/consultation/${selectedAppointment.id}`)
+      .delete(`http://localhost:3001/consultation/${selectedAppointment.c_id}`)
       .then((response) => {
         // Handle the response here
         console.log(response);
@@ -145,14 +151,14 @@ function RequestAppointment() {
             <List>
               {appointments.map((appointment) => (
                 <ListItem
-                  key={appointment.id}
+                  key={appointment.c_id}
                   button
-                  selected={selectedAppointment?.id === appointment.id}
+                  selected={selectedAppointment?.c_id === appointment.c_id}
                   onClick={() => handleAppointmentClick(appointment)}
                 >
                   <ListItemText
-                    primary={`${appointment.FirstName} ${appointment.LastName}`}
-                    secondary={`${appointment.DateOfbirth} ${appointment.email}`}
+                    primary={`${appointment.c_patientId} ${appointment.c_patientId}`}
+                    secondary={`${appointment.DateOfbirth} ${appointment.c_email}`}
                   />
                 </ListItem>
               ))}
@@ -164,13 +170,13 @@ function RequestAppointment() {
             <Paper className={classes.paper}>
               <Typography variant="h6">
                 Request Details for{" "}
-                {`${selectedAppointment.FirstName} ${selectedAppointment.LastName}`}
+                {`${selectedAppointment.c_patientId} ${selectedAppointment.c_patientId}`}
               </Typography>
               <Divider />
               <Typography variant="subtitle1">
-                Date of birth: {selectedAppointment.DateOfbirth}
+                Date of birth: {selectedAppointment.c_patientId}
               </Typography>
-              <Typography variant="subtitle1">Email: {selectedAppointment.email}</Typography>
+              <Typography variant="subtitle1">Email: {selectedAppointment.c_patientId}</Typography>
               <div style={{ marginTop: "16px", marginBottom: "16px" }}>
                 <AcceptButton onClick={handleAcceptButtonClick} />{" "}
                 <DeclineButton onClick={handleDeclineButtonClick} />

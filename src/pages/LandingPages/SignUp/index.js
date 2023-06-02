@@ -71,6 +71,24 @@ const SignUpBasic = () => {
   };
 
   not_authenticated();
+
+  // const validateForm = () => {
+  //   const errors = {};
+  //
+  //   // Perform form field validation here
+  //   if (formData.firstname.trim() === "") {
+  //     errors.firstname = "First name is required";
+  //   }
+  //
+  //   if (formData.lastname.trim() === "") {
+  //     errors.lastname = "Last name is required";
+  //   }
+  //
+  //   // ... (add validation for other fields)
+  //
+  //   return errors;
+  // };
+
   return (
     <>
       <DefaultNavbar

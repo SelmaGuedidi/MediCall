@@ -35,10 +35,28 @@ const SignUpBasic = () => {
     role: "",
     speciality: "",
   });
-
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isPasswordSubmitted, setIsPasswordSubmitted] = useState(false);
+  const validateEmail = () => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (isSubmitted && !emailRegex.test(formData.email)) {
+      return "Invalid email address";
+    } else {
+      return "";
+    }
+  };
+  const handleChange = (event) => {
+    if (event.target.name === "email") {
+      setIsSubmitted(false); // Clear the email submission flag
+    } else if (event.target.name === "password") {
+      setIsPasswordSubmitted(false); // Clear the password submission flag
+    }
+    setFormData({ ...formData, [event.target.name]: event.target.value });
+  };
   const handleSubmit = async (event) => {
-    event.preventDefault(); // Prevent the default form submission
-
+    event.preventDefault();
+    setIsSubmitted(true);
+    setIsPasswordSubmitted(true);
     try {
       const response = await fetch("http://localhost:3001/user/subscribe", {
         method: "POST",
@@ -72,6 +90,7 @@ const SignUpBasic = () => {
       console.log(error);
     }
   };
+
 
   // const handleChange = (e) => {
   //   setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -169,6 +188,9 @@ const SignUpBasic = () => {
                         label="First name"
                         fullWidth
                         autoComplete="given-name"
+                        inputProps={{
+                          maxLength: 10, // Set the maximum length of the input
+                        }}
                         value={formData.firstname}
                         onChange={handleChange}
                         error={Boolean(formErrors.firstname)}
@@ -183,6 +205,9 @@ const SignUpBasic = () => {
                         label="Last name"
                         fullWidth
                         autoComplete="family-name"
+                        inputProps={{
+                          maxLength: 10, // Set the maximum length of the input
+                        }}
                         value={formData.lastname}
                         onChange={handleChange}
                         error={Boolean(formErrors.lastname)}
@@ -216,8 +241,8 @@ const SignUpBasic = () => {
                         autoComplete="email"
                         value={formData.email}
                         onChange={handleChange}
-                        error={Boolean(formErrors.email)}
-                        helperText={formErrors.email}
+                        error={isSubmitted && validateEmail() !== ""}
+                        helperText={isSubmitted && validateEmail()}
                       />
                     </Grid>
                     <Grid item xs={12}>
@@ -231,8 +256,12 @@ const SignUpBasic = () => {
                         autoComplete="new-password"
                         value={formData.password}
                         onChange={handleChange}
-                        error={Boolean(formErrors.password)}
-                        helperText={formErrors.password}
+                        error={isPasswordSubmitted && formData.password === ""}
+                        helperText={
+                          isPasswordSubmitted && formData.password === ""
+                            ? "Password is required"
+                            : ""
+                        }
                       />
                     </Grid>
                     <Grid item xs={12}>

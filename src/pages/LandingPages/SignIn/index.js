@@ -13,24 +13,26 @@ import GoogleIcon from "@mui/icons-material/Google";
 import axios from "axios";
 import routesNavbar from "../../../routesNavbar";
 import Cookies from "js-cookie";
-import { not_authenticated } from "../../../generic/generic_functions/authenticated";
 import jwt_decode from "jwt-decode";
-//import { not_authenticated } from "../../../generic/generic_functions/authenticated";
-//import jwt_decode from "jwt-decode";
-//import { useNavigate } from "react-router";
 
 const SignInBasic = () => {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
-
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+  const handleChange = (event) => {
+    if (event.target.name === "email") {
+      setIsSubmitted(false); // Clear the email submission flag
+    } else if (event.target.name === "password") {
+      setIsPasswordSubmitted(false); // Clear the password submission flag
+    }
+    setFormData({ ...formData, [event.target.name]: event.target.value });
   };
-
   const handleSubmit = async (event) => {
-    event.preventDefault(); // Prevent the default form submission
+    event.preventDefault();
+    setIsSubmitted(true);
+    setIsPasswordSubmitted(true);
+    // Check if the password is empty
 
     try {
       const response = await axios.post("http://localhost:3001/user/login", formData);
@@ -48,11 +50,11 @@ const SignInBasic = () => {
         const isAuthenticated = decodedToken.authenticated;
         const userId = decodedToken.id;
         const userRole = decodedToken.role;
-        console.log("Authenticated :", isAuthenticated);
-        console.log("userId :", userId);
-        console.log("userRole :", userRole);
+        console.log("Authenticated:", isAuthenticated);
+        console.log("userId:", userId);
+        console.log("userRole:", userRole);
 
-        window.location.href = "/presenatation";
+        window.location.href = "/presentation";
       } else {
         console.log("Unexpected response status:", response.status);
       }
@@ -61,8 +63,25 @@ const SignInBasic = () => {
       console.log(error);
     }
   };
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isPasswordSubmitted, setIsPasswordSubmitted] = useState(false);
+  const validateEmail = () => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (isSubmitted && !emailRegex.test(formData.email)) {
+      return "Invalid email address";
+    } else {
+      return "";
+    }
+  };
 
-  not_authenticated();
+  /*const validatePassword = () => {
+    if (isSubmitted && !formData.password) {
+      return "Password should not be empty";
+    } else {
+      return "";
+    }
+  };*/
+
   return (
     <>
       <DefaultNavbar routes={routesNavbar} transparent light />
@@ -133,6 +152,8 @@ const SignInBasic = () => {
                         autoComplete="email"
                         value={formData.email}
                         onChange={handleChange}
+                        error={isSubmitted && validateEmail() !== ""}
+                        helperText={isSubmitted && validateEmail()}
                       />
                     </Grid>
                     <Grid item xs={12}>
@@ -146,6 +167,12 @@ const SignInBasic = () => {
                         autoComplete="new-password"
                         value={formData.password}
                         onChange={handleChange}
+                        error={isPasswordSubmitted && formData.password === ""}
+                        helperText={
+                          isPasswordSubmitted && formData.password === ""
+                            ? "Password is required"
+                            : ""
+                        }
                       />
                     </Grid>
 

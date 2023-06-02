@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   List,
   ListItem,
@@ -14,7 +14,9 @@ import {
 import DefaultNavbar from "../../../examples/Navbars/DefaultNavbar";
 import routesNavbar from "../../../routesNavbar";
 import { AcceptButton, DeclineButton } from "../../../components/AcceptDeclineButton";
-//import { attributes } from "../../../generic/generic_functions/authenticated";
+
+import axios from "axios";
+import { attributes } from "../../../generic/generic_functions/authenticated";
 //import axios from "axios";
 
 const useStyles = makeStyles((theme) => ({
@@ -24,29 +26,13 @@ const useStyles = makeStyles((theme) => ({
     maxWidth: 500,
   },
 }));
-//const attributesData = attributes();
+const attributesData = attributes();
 //const isAuthenticated = attributesData.authenticated;
-//const userId = attributesData.user_id;
+const userId = attributesData.user_id;
 //const role = attributesData.role;
 // if (!isAuthenticated || role !== "doctor") {
 //   window.location.href = "/pages/authentication/sign-in";
 // }
-let appointments = [
-  {
-    id: 1,
-    FirstName: "X",
-    LastName: "X",
-    email: "X@gmail.com",
-    DateOfbirth: "05/06/1982",
-  },
-  {
-    id: 2,
-    FirstName: "Foulen",
-    LastName: "Ben foulen",
-    email: "foulen@gmail.com",
-    DateOfbirth: "01/01/1990",
-  },
-];
 
 function RequestAppointment() {
   const classes = useStyles();
@@ -68,6 +54,20 @@ function RequestAppointment() {
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
+  let [appointments, setAppointments] = useState([]);
+
+  useEffect(() => {
+    const fetchAppointments = async () => {
+      try {
+        const response = await axios.get(`http://localhost:3001/consultation/requests/${userId}`);
+        setAppointments(response.data);
+        console.log(appointments);
+      } catch (error) {
+        console.log("Error fetching appointments:", error);
+      }
+    };
+    fetchAppointments();
+  }, []);
   const handleConfirmButtonClick = () => {
     const selectedDate = formData.date;
     const selectedTime = formData.time;
@@ -76,59 +76,60 @@ function RequestAppointment() {
     console.log("Selected Date:", selectedDate);
     console.log("Selected Time:", selectedTime);
 
+    const thedate = selectedDate + " " + selectedTime;
     // Prepare the data for the POST request
     const requestData = {
-      date: selectedDate,
-      time: selectedTime,
+      date: thedate,
     };
-
-    if (requestData.date && requestData.time) {
-      console.log(requestData);
+    if (selectedDate && selectedTime) {
+      // console.log(requestData);
+      // console.log(date);
       formData.accepted = 0;
       formData.date = "";
       formData.time = "";
       setSelectedAppointment(null);
-      appointments = appointments.filter(
-        (appointment) => appointment.id !== selectedAppointment.id
+      setAppointments(
+        appointments.filter((appointment) => appointment.id !== selectedAppointment.id)
       );
-    }
+      // Send a POST request to the server with the updated data
+      axios
+        .patch(`http://localhost:3001/consultation/${selectedAppointment.id}`, requestData)
+        .then((response) => {
+          // Handle the response here
+          console.log(response);
 
-    // // Send a POST request to the server with the updated data
-    // axios
-    //   .post("/api/appointments", requestData)
-    //   .then((response) => {
-    //     // Handle the response here
-    //     console.log(response);
-    //
-    //     // Clear the form data and reset the selected appointment
-    //     setFormData({
-    //       date: "",
-    //       time: "",
-    //     });
-    //     formData.accepted = 0;
-    //     setSelectedAppointment(null);
-    //   })
-    //   .catch((error) => {
-    //     // Handle errors here
-    //     console.log(error);
-    //   });
+          // Clear the form data and reset the selected appointment
+          setFormData({
+            date: "",
+            time: "",
+          });
+          formData.accepted = 0;
+          setSelectedAppointment(null);
+        })
+        .catch((error) => {
+          // Handle errors here
+          console.log(error);
+        });
+    }
   };
 
   const handleDeclineButtonClick = () => {
     // Filter out the selected appointment from the appointments array
-    appointments = appointments.filter((appointment) => appointment.id !== selectedAppointment.id);
+    setAppointments(
+      appointments.filter((appointment) => appointment.id !== selectedAppointment.id)
+    );
 
     // Send a DELETE request to the backend to delete the request
-    // axios
-    //   .delete(`/api/appointments/${selectedAppointment.id}`)
-    //   .then((response) => {
-    //     // Handle the response here
-    //     console.log(response);
-    //   })
-    //   .catch((error) => {
-    //     // Handle errors here
-    //     console.log(error);
-    //   });
+    axios
+      .delete(`http://localhost:3001/consultation/${selectedAppointment.id}`)
+      .then((response) => {
+        // Handle the response here
+        console.log(response);
+      })
+      .catch((error) => {
+        // Handle errors here
+        console.log(error);
+      });
 
     // Deselect the selected appointment
     setSelectedAppointment(null);

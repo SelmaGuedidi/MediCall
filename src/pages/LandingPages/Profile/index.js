@@ -1,18 +1,3 @@
-/*
-=========================================================
-* Material Kit 2 React - v2.1.0
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/material-kit-react
-* Copyright 2023 Creative Tim (https://www.creative-tim.com)
-
-Coded by www.creative-tim.com
-
- =========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-*/
-
 import React, { useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Avatar from "@material-ui/core/Avatar";
@@ -62,6 +47,32 @@ function Profile() {
     };
 
     fetchDoctor(id);
+  }, []);
+
+  const attributesData = attributes();
+  //const isAuthenticated = attributesData.authenticated;
+  const userId = attributesData.user_id;
+  const [appointment, setAppointment] = useState([]);
+  const requestdata = {
+    doctor: id,
+    patient: userId,
+  };
+  useEffect(() => {
+    const fetchAppointment = async () => {
+      try {
+        const res = await axios.get(
+          `http://localhost:3001/consultation//docteranduser`,
+          requestdata
+        );
+        console.log(res);
+        setAppointment(res.data);
+        console.log(appointment);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
+    fetchAppointment(id);
   }, []);
 
   const [buttonDisabled, setButtonDisabled] = useState(false);

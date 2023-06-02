@@ -24,6 +24,8 @@ import routesNavbar from "../../../routesNavbar";
 import { not_authenticated } from "../../../generic/generic_functions/authenticated";
 //import { useNavigate } from "react-router";
 const SignUpBasic = () => {
+  const [formErrors, setFormErrors] = useState({}); // State for storing form field errors
+
   const [formData, setFormData] = useState({
     firstname: "",
     lastname: "",
@@ -45,6 +47,11 @@ const SignUpBasic = () => {
           "Content-Type": "application/json", // Set the Content-Type header to application/json
         },
       });
+      const errors = validateForm();
+      if (Object.keys(errors).length > 0) {
+        setFormErrors(errors);
+        return;
+      }
 
       // Check the status code of the response
       if (Math.floor(response.status / 100) === 4) {
@@ -66,42 +73,37 @@ const SignUpBasic = () => {
     }
   };
 
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
+  // const handleChange = (e) => {
+  //   setFormData({ ...formData, [e.target.name]: e.target.value });
+  // };
 
   not_authenticated();
 
-  // const validateForm = () => {
-  //   const errors = {};
-  //
-  //   // Perform form field validation here
-  //   if (formData.firstname.trim() === "") {
-  //     errors.firstname = "First name is required";
-  //   }
-  //
-  //   if (formData.lastname.trim() === "") {
-  //     errors.lastname = "Last name is required";
-  //   }
-  //
-  //   // ... (add validation for other fields)
-  //
-  //   return errors;
-  // };
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+    setFormErrors({ ...formErrors, [e.target.name]: "" }); // Clear the error message when the field value changes
+  };
+
+  const validateForm = () => {
+    const errors = {};
+
+    // Perform form field validation here
+    if (formData.firstname.trim() === "") {
+      errors.firstname = "First name is required";
+    }
+
+    if (formData.lastname.trim() === "") {
+      errors.lastname = "Last name is required";
+    }
+
+    // ... (add validation for other fields)
+
+    return errors;
+  };
 
   return (
     <>
-      <DefaultNavbar
-        routes={routesNavbar}
-        action={{
-          type: "external",
-          route: "https://www.creative-tim.com/product/material-kit-react",
-          label: "free download",
-          color: "info",
-        }}
-        transparent
-        light
-      />
+      <DefaultNavbar routes={routesNavbar} transparent light />
       <MKBox
         position="absolute"
         top={0}
@@ -169,6 +171,8 @@ const SignUpBasic = () => {
                         autoComplete="given-name"
                         value={formData.firstname}
                         onChange={handleChange}
+                        error={Boolean(formErrors.firstname)}
+                        helperText={formErrors.firstname}
                       />
                     </Grid>
                     <Grid item xs={12} sm={6}>
@@ -181,6 +185,8 @@ const SignUpBasic = () => {
                         autoComplete="family-name"
                         value={formData.lastname}
                         onChange={handleChange}
+                        error={Boolean(formErrors.lastname)}
+                        helperText={formErrors.lastname}
                       />
                     </Grid>
                     <Grid item xs={12}>
@@ -196,6 +202,8 @@ const SignUpBasic = () => {
                         }}
                         value={formData.birthdate}
                         onChange={handleChange}
+                        error={Boolean(formErrors.birthdate)}
+                        helperText={formErrors.birthdate}
                       />
                     </Grid>
                     <Grid item xs={12}>
@@ -208,6 +216,8 @@ const SignUpBasic = () => {
                         autoComplete="email"
                         value={formData.email}
                         onChange={handleChange}
+                        error={Boolean(formErrors.email)}
+                        helperText={formErrors.email}
                       />
                     </Grid>
                     <Grid item xs={12}>
@@ -221,11 +231,12 @@ const SignUpBasic = () => {
                         autoComplete="new-password"
                         value={formData.password}
                         onChange={handleChange}
+                        error={Boolean(formErrors.password)}
+                        helperText={formErrors.password}
                       />
                     </Grid>
                     <Grid item xs={12}>
                       <FormControl component="fieldset">
-                        {/*<FormLabel component="legend">Role</FormLabel>*/}
                         <RadioGroup
                           aria-label="role"
                           name="role"
@@ -242,15 +253,15 @@ const SignUpBasic = () => {
                     {formData.role === "doctor" && (
                       <Grid item xs={12}>
                         <FormControl fullWidth>
-                          {/*<FormLabel component="legend">Choice</FormLabel>*/}
                           <Select
                             id="speciality"
                             name="speciality"
                             value={formData.speciality}
                             onChange={handleChange}
+                            error={Boolean(formErrors.speciality)}
+                            helperText={formErrors.speciality}
                           >
                             <MenuItem value="">Select a type</MenuItem>
-
                             <MenuItem value="gynecologist">Gynecologist</MenuItem>
                             <MenuItem value="dermatologist">Dermatologist</MenuItem>
                             <MenuItem value="radiologist">Radiologist</MenuItem>

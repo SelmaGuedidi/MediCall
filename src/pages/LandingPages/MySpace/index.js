@@ -71,6 +71,36 @@ function MySpace() {
     }
   }, [selectedAppointment]);
 
+  const [isButtonDisabled, setIsButtonDisabled] = useState(false);
+  console.log(setIsButtonDisabled);
+  // useEffect(() => {
+  //   // Vérifier si la date n'est pas selectedAppointment.c_date.slice(0, 10)
+  //   // et si nous ne sommes pas dans la plage horaire spécifiée
+  //   if (selectedAppointment) {
+  //     const currentDate = new Date();
+  //     const appointmentDate = new Date(selectedAppointment.c_date);
+  //     const appointmentTime =
+  //       selectedAppointment.c_date.slice(11, 13) * 60 + selectedAppointment.c_date.slice(14, 16);
+  //     const currentTime = currentDate.getHours() * 60 + currentDate.getMinutes();
+  //     console.log(appointmentTime);
+  //     const fifteenMinutesBefore = appointmentTime - 15;
+  //     const oneHourFifteenMinutesAfter = appointmentTime + 75;
+  //
+  //     console.log(fifteenMinutesBefore);
+  //     console.log(currentTime);
+  //     console.log(oneHourFifteenMinutesAfter);
+  //     if (
+  //       appointmentDate.toDateString() !== currentDate.toDateString() ||
+  //       currentTime < fifteenMinutesBefore ||
+  //       currentTime > oneHourFifteenMinutesAfter
+  //     ) {
+  //       setIsButtonDisabled(true);
+  //     } else {
+  //       setIsButtonDisabled(false);
+  //     }
+  //   }
+  // }, [selectedAppointment]);
+
   useEffect(() => {
     const fetchAppointments = async () => {
       try {
@@ -125,18 +155,36 @@ function MySpace() {
               <Typography variant="subtitle1">
                 Time: {selectedAppointment.c_date.slice(11, 16)}
               </Typography>
-              <Link
-                to="/pages/landing-pages/agora"
-                state={{
-                  appointment_id: selectedAppointment.c_id,
-                  appointment_channel: selectedAppointment.c_channel,
-                  token_call: selectedAppointment.c_token,
-                }}
-              >
-                <MKButton type="submit" variant="gradient" color="info">
-                  <Icon> phone</Icon>
-                </MKButton>
-              </Link>
+              {isButtonDisabled ? (
+                <span>
+                  <MKButton
+                    type="submit"
+                    variant="gradient"
+                    color="info"
+                    disabled={isButtonDisabled}
+                  >
+                    <Icon>phone</Icon>
+                  </MKButton>
+                </span>
+              ) : (
+                <Link
+                  to="/pages/landing-pages/agora"
+                  state={{
+                    appointment_id: selectedAppointment.c_id,
+                    appointment_channel: selectedAppointment.c_channel,
+                    token_call: selectedAppointment.c_token,
+                  }}
+                >
+                  <MKButton
+                    type="submit"
+                    variant="gradient"
+                    color="info"
+                    disabled={isButtonDisabled}
+                  >
+                    <Icon>phone</Icon>
+                  </MKButton>
+                </Link>
+              )}
             </Paper>
           ) : (
             <Paper className={classes.paper}>

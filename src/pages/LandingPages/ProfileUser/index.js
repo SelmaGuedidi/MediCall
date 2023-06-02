@@ -72,7 +72,7 @@ function ProfileUser() {
     };
     fetchUser();
   }, [id]);
-  const handleClick = () => {};
+
   const [showConfirmation, setShowConfirmation] = useState(false);
 
   const handleDelete = () => {
@@ -103,12 +103,31 @@ function ProfileUser() {
       <DefaultNavbar routes={routesNavbar} />
       <Grid container spacing={2}>
         <Grid item xs={20} lg={6}>
-          <Avatar
-            alt="Doctor's Photo"
-            src="https://img.freepik.com/premium-vector/user-icon-human-person-symbol-social-profile-icon-avatar-login-sign-web-user-symbol-neumorphic-ui-ux-white-user-interface-web-button-neumorphism-vector-eps-10_399089-2757.jpg?w=2000"
-            className={classes.avatar}
-            style={{ marginLeft: "200px", marginTop: "170px", height: "300px", width: "300px" }}
-          />
+          {role === "doctor" ? (
+            <Avatar
+              alt="Doctor's Photo"
+              src={doctor.image}
+              className={classes.avatar}
+              style={{
+                marginLeft: "200px",
+                marginTop: "170px",
+                height: "300px",
+                width: "300px",
+              }}
+            />
+          ) : (
+            <Avatar
+              alt="Doctor's Photo"
+              src="https://img.freepik.com/premium-vector/user-icon-human-person-symbol-social-profile-icon-avatar-login-sign-web-user-symbol-neumorphic-ui-ux-white-user-interface-web-button-neumorphism-vector-eps-10_399089-2757.jpg?w=2000"
+              className={classes.avatar}
+              style={{
+                marginLeft: "200px",
+                marginTop: "170px",
+                height: "300px",
+                width: "300px",
+              }}
+            />
+          )}
         </Grid>
         <Grid
           item
@@ -153,17 +172,34 @@ function ProfileUser() {
                 </MKTypography>
               </MKBox>
               <MKBox p={3}>
-                <Grid container item justifyContent="center" xs={12} mt={5} mb={2} spacing={2}>
-                  <Grid item>
-                    <MKButton
-                      variant="gradient"
-                      color="warning"
-                      style={{ marginTop: "30px", background: "#FFD700" }}
-                      onClick={handleClick}
-                    >
-                      Edit profile
-                    </MKButton>
+                {role === "doctor" && (
+                  <Grid>
+                    <MKTypography variant="body" color="text" mb={3} style={{ marginTop: "30px" }}>
+                      Consultation Price: {doctor.visitprice}
+                    </MKTypography>
                   </Grid>
+                )}
+                <Grid>
+                  <MKTypography variant="body" color="text" mb={3} style={{ marginTop: "30px" }}>
+                    Email : {doctor.email}
+                  </MKTypography>
+                </Grid>
+                {/*<Grid>*/}
+                {/*  <MKTypography variant="body" color="text" mb={3} style={{ marginTop: "30px" }}>*/}
+                {/*    Birth Date : {doctor.birthdate.slice(0, 10)}*/}
+                {/*  </MKTypography>*/}
+                {/*</Grid>*/}
+                <Grid container item justifyContent="center" xs={12} mt={5} mb={2} spacing={2}>
+                  {/*<Grid item>*/}
+                  {/*  <MKButton*/}
+                  {/*    variant="gradient"*/}
+                  {/*    color="warning"*/}
+                  {/*    style={{ marginTop: "30px", background: "#FFD700" }}*/}
+                  {/*    onClick={handleClick}*/}
+                  {/*  >*/}
+                  {/*    Edit profile*/}
+                  {/*  </MKButton>*/}
+                  {/*</Grid>*/}
                   <Grid item>
                     <MKButton
                       variant="gradient"
@@ -175,7 +211,6 @@ function ProfileUser() {
                     </MKButton>
                   </Grid>
                 </Grid>
-                {/* Display confirmation message */}
                 {showConfirmation && (
                   <div>
                     <MKBox p={3}>
@@ -193,7 +228,7 @@ function ProfileUser() {
                           <MKButton
                             variant="gradient"
                             color="danger"
-                            style={{ marginTop: "30px", background: "#FFD700" }}
+                            style={{ marginTop: "30px", background: "#FF0000" }}
                             onClick={handleConfirmation}
                           >
                             Yes
@@ -203,7 +238,12 @@ function ProfileUser() {
                           <MKButton
                             variant="gradient"
                             color="blue"
-                            style={{ marginTop: "30px", background: "#FF0000" }}
+                            style={{
+                              marginTop: "30px",
+                              background: "transparent",
+                              border: "1px solid blue",
+                              color: "blue",
+                            }}
                             onClick={() => setShowConfirmation(false)}
                           >
                             No

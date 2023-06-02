@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   List,
   ListItem,
@@ -14,6 +14,7 @@ import routesNavbar from "../../../routesNavbar";
 import MKButton from "../../../components/MKButton";
 import Icon from "@mui/material/Icon";
 import { attributes, authenticated } from "../../../generic/generic_functions/authenticated";
+import axios from "axios";
 
 authenticated();
 
@@ -26,25 +27,37 @@ const useStyles = makeStyles((theme) => ({
 }));
 const attributesData = attributes();
 //const isAuthenticated = attributesData.authenticated;
-//const userId = attributesData.user_id;
-const role = attributesData.role;
-let appointments = [];
-if (role === "doctor") {
-  appointments = [
-    { id: 1, date: "2023-01-06", time: "6:00 PM", FirstName: "Foulen", LastName: "Ben foulen" },
-  ];
-} else {
-  appointments = [
-    { id: 1, date: "2023-01-06", time: "6:00 PM", FirstName: "Fehmi", LastName: "Touzani" },
-  ];
-}
+const userId = attributesData.user_id;
+//const role = attributesData.role;
+// if (role === "doctor") {
+//   appointments = [
+//     { id: 1, date: "2023-01-06", time: "6:00 PM", FirstName: "Foulen", LastName: "Ben foulen" },
+//   ];
+// } else {
+//   appointments = [
+//     { id: 1, date: "2023-01-06", time: "6:00 PM", FirstName: "Fehmi", LastName: "Touzani" },
+//   ];
+// }
 function MySpace() {
   const classes = useStyles();
   const [selectedAppointment, setSelectedAppointment] = useState(null);
-
+  const [appointments, setAppointments] = useState([]);
   const handleAppointmentClick = (appointment) => {
     setSelectedAppointment(appointment);
   };
+
+  useEffect(() => {
+    const fetchAppointments = async () => {
+      try {
+        const response = await axios.get(`http://localhost:3001/consultation/accepted/${userId}`);
+        setAppointments(response.data);
+        console.log(appointments);
+      } catch (error) {
+        console.log("Error fetching appointments:", error);
+      }
+    };
+    fetchAppointments();
+  }, []);
 
   return (
     <>
@@ -76,8 +89,8 @@ function MySpace() {
                 {`${selectedAppointment.FirstName} ${selectedAppointment.LastName}`}
               </Typography>
               <Divider />
-              <Typography variant="subtitle1">Time: {selectedAppointment.date}</Typography>
-              <Typography variant="subtitle1">Location: {selectedAppointment.time}</Typography>
+              <Typography variant="subtitle1">Date: {selectedAppointment.date}</Typography>
+              <Typography variant="subtitle1">Time: {selectedAppointment.time}</Typography>
               <MKButton
                 type="submit"
                 variant="gradient"

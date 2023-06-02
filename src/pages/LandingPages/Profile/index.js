@@ -50,30 +50,40 @@ function Profile() {
   }, []);
 
   const attributesData = attributes();
-  //const isAuthenticated = attributesData.authenticated;
   const userId = attributesData.user_id;
-  const [appointment, setAppointment] = useState([]);
-  // const requestdata = {
-  //   doctor: id,
-  //   patient: userId,
-  // };
+  const [appointments, setAppointment] = useState([]);
   useEffect(() => {
     const fetchAppointment = async () => {
       try {
         const res = await axios.get(`http://localhost:3001/consultation/${id}/${userId}`);
         console.log(res);
         setAppointment(res.data);
-        console.log("Appointment :", appointment);
+        console.log("Appointment :", appointments);
       } catch (err) {
+        setButtonDisabled(false);
+        setButtonText("Make an appointment");
         console.log(err);
       }
     };
 
     fetchAppointment();
   }, []);
+  useEffect(() => {
+    console.log("Appointment:", appointments);
+    if (appointments.acceptee === 0) {
+      setButtonDisabled(true);
+      setButtonText("Request sent");
+    }
+  }, [appointments]);
 
   const [buttonDisabled, setButtonDisabled] = useState(false);
   const [buttonText, setButtonText] = useState("Make an appointment");
+
+  // const hasPendingAppointment = appointments.filter((appointment) => appointment.accepte === 0);
+  // if (hasPendingAppointment) {
+  //   setButtonDisabled(true);
+  //   setButtonText("Request sent");
+  // }
 
   const handleClick = () => {
     const attributesData = attributes();
@@ -83,7 +93,8 @@ function Profile() {
     if (!isAuthenticated) {
       window.location.href = "/pages/authentication/sign-in";
     }
-    if (role === "patient") {
+    console.log(role);
+    if (role === "user") {
       // Disable the button and update the text
       setButtonDisabled(true);
       setButtonText("Request sent");
@@ -98,7 +109,7 @@ function Profile() {
         .post(`http://localhost:3001/consultation`, requestData)
         .then((response) => {
           // Handle the response here
-          console.log(response);
+          console.log("response ", response);
         })
         .catch((error) => {
           // Handle errors here

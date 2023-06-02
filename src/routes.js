@@ -60,6 +60,7 @@ import RequestAppointment from "./pages/LandingPages/RequestAppointment";
 import SignOut from "./layouts/pages/authentication/sign-out";
 import AboutUs from "./pages/LandingPages/AboutUs";
 import ProfileUser from "./pages/LandingPages/ProfileUser";
+import Speciality from "./pages/LandingPages/Speciality";
 
 const routes = [
   {
@@ -85,6 +86,11 @@ const routes = [
         name: "Profile",
         route: "/pages/landing-pages/profile-user",
         component: <ProfileUser />,
+      },
+      {
+        name: "Speciality",
+        route: "/pages/landing-pages/speciality",
+        component: <Speciality />,
       },
     ],
   },

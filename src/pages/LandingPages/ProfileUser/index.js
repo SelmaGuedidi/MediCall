@@ -34,21 +34,39 @@ function ProfileUser() {
   console.log(id);
   const classes = useStyles();
   console.log(classes);
-  const [user, setUser] = useState(null);
-
+  const [doctor, setDoctor] = useState([]);
+  console.log(doctor);
+  // useEffect(() => {
+  //   if (!isAuthenticated) {
+  //     window.location.href = "/pages/authentication/sign-in";
+  //     return;
+  //   }
+  //
+  //   const fetchUser = async (userId) => {
+  //     try {
+  //       const res = await axios.get(`http://localhost:3001/user/${userId}`);
+  //       setDoctor(res.data);
+  //     } catch (err) {
+  //       console.log("Error:", err);
+  //     }
+  //   };
+  //
+  //   fetchUser(userId);
+  // }, [isAuthenticated, userId]);
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const response = await axios.get(`http://localhost:3001/consultation/requests/${id}`);
-        setUser(response.data);
-        console.log(user);
+        const response = await axios.get(`http://localhost:3001/user/${id}`);
+        const userData = response.data;
+        console.log(userData);
+        setDoctor(response.data);
+        // Process the user data as needed
       } catch (error) {
-        console.log("Error fetching appointments:", error);
+        console.log("Error:", error);
       }
     };
     fetchUser();
-  }, []);
-
+  }, [id]);
   const handleClick = () => {};
   return (
     <>
@@ -101,7 +119,7 @@ function ProfileUser() {
                   mt={1}
                   textAlign="center"
                 >
-                  {user.firstname + " " + user.lastname}
+                  {doctor.firstname + " " + doctor.lastname}
                 </MKTypography>
               </MKBox>
               <MKBox p={3}>

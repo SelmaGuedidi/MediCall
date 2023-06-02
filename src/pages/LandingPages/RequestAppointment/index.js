@@ -168,14 +168,14 @@ function RequestAppointment() {
             <Typography variant="h6">Appointments</Typography>
             <Divider />
             <List>
-              {appointments.map((appointment) => (
+              {appointments.map((appointment, index) => (
                 <ListItem
                   key={appointment.c_id}
                   button
                   selected={selectedAppointment?.c_id === appointment.c_id}
                   onClick={() => handleAppointmentClick(appointment)}
                 >
-                  <ListItemText primary={"Appointment"} />
+                  <ListItemText primary={`Appointment ${index + 1}`} />
                 </ListItem>
               ))}
             </List>

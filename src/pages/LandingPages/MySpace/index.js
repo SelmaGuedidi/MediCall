@@ -28,7 +28,7 @@ const useStyles = makeStyles((theme) => ({
 const attributesData = attributes();
 //const isAuthenticated = attributesData.authenticated;
 const userId = attributesData.user_id;
-//const role = attributesData.role;
+const role = attributesData.role;
 // if (role === "doctor") {
 //   appointments = [
 //     { id: 1, date: "2023-01-06", time: "6:00 PM", FirstName: "Foulen", LastName: "Ben foulen" },
@@ -41,21 +41,46 @@ const userId = attributesData.user_id;
 function MySpace() {
   const classes = useStyles();
   const [selectedAppointment, setSelectedAppointment] = useState(null);
+  const [selectedDoctor, setSelectedDoctor] = useState(null);
   const [appointments, setAppointments] = useState([]);
+  console.log(role);
   const handleAppointmentClick = (appointment) => {
     setSelectedAppointment(appointment);
   };
+  let otherUser = "doctor";
+  useEffect(() => {
+    const fetchDoctor = async (id) => {
+      try {
+        if (role === "doctor") {
+          otherUser = "user";
+        }
+        const response = await axios.get(`http://localhost:3001/${otherUser}/${id}`);
+        setSelectedDoctor(response.data);
+        console.log(response.data);
+      } catch (error) {
+        console.log("Error fetching doctor:", error);
+      }
+    };
+
+    if (selectedAppointment) {
+      if (role === "doctor") {
+        fetchDoctor(selectedAppointment.c_patientId);
+      }
+      fetchDoctor(selectedAppointment.c_doctorId);
+    }
+  }, [selectedAppointment]);
 
   useEffect(() => {
     const fetchAppointments = async () => {
       try {
         const response = await axios.get(`http://localhost:3001/consultation/accepted/${userId}`);
         setAppointments(response.data);
-        console.log("Appointments:", appointments);
+        console.log(response.data);
       } catch (error) {
         console.log("Error fetching appointments:", error);
       }
     };
+
     fetchAppointments();
   }, []);
 
@@ -75,25 +100,27 @@ function MySpace() {
                   selected={selectedAppointment?.c_id === appointment.c_id}
                   onClick={() => handleAppointmentClick(appointment)}
                 >
-                  <ListItemText primary={appointment.c_date} secondary={appointment.time} />
+                  <ListItemText
+                    primary={appointment.c_date.slice(0, 10)}
+                    secondary={appointment.c_date.slice(11, 16)}
+                  />
                 </ListItem>
               ))}
             </List>
           </Paper>
         </Grid>
         <Grid item xs={5} style={{ marginTop: "160px" }}>
-          {selectedAppointment ? (
+          {selectedAppointment && selectedDoctor ? (
             <Paper className={classes.paper}>
               <Typography variant="h6">
-                Appointment Details for{" "}
-                {`${selectedAppointment.firstname} ${selectedAppointment.lastname}`}
+                Appointment Details for {`${selectedDoctor.firstname} ${selectedDoctor.lastname}`}
               </Typography>
               <Divider />
               <Typography variant="subtitle1">
                 Date: {selectedAppointment.c_date.slice(0, 10)}
               </Typography>
               <Typography variant="subtitle1">
-                {/*Time: {selectedAppointment.date.slice(11, 19)}*/}
+                Time: {selectedAppointment.c_date.slice(11, 16)}
               </Typography>
               <MKButton
                 type="submit"

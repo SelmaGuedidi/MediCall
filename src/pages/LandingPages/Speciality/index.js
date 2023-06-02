@@ -31,8 +31,10 @@ import ExampleCard from "pages/Presentation/components/ExampleCard";
 //import data from "pages/Presentation/sections/data/designBlocksData";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import routesNavbar from "../../../routesNavbar";
+import DefaultNavbar from "../../../examples/Navbars/DefaultNavbar";
 
-function DesignBlocks() {
+function Speciality() {
   const [speciality, seSpecialities] = useState([]);
   const client = axios.create({
     baseURL: "http://localhost:3001/speciality",
@@ -44,11 +46,11 @@ function DesignBlocks() {
     };
     fetchSeciality();
   }, []);
-  const renderData = speciality.map(({ name, doctors, id }) => (
+  const renderData = speciality.map(({ name, doctors }) => (
     <Grid container spacing={3} sx={{ mb: 10 }} key={name}>
       <Grid item xs={12} lg={3}>
         <MKBox position="sticky" top="100px" pb={{ xs: 2, lg: 6 }}>
-          <Link to="/pages/landing-pages/speciality" state={{ id: id, speciality: name }}>
+          <Link to="/pages/authentication/sign-out">
             <MKTypography variant="h3" fontWeight="bold" mb={1}>
               {name.charAt(0).toUpperCase() + name.slice(1)}
             </MKTypography>
@@ -70,28 +72,31 @@ function DesignBlocks() {
   ));
 
   return (
-    <MKBox component="section" my={6} py={6}>
-      <Container>
-        <Grid
-          container
-          item
-          xs={12}
-          lg={6}
-          flexDirection="column"
-          alignItems="center"
-          sx={{ textAlign: "center", my: 6, mx: "auto", px: 0.75, marginTop: "100px" }}
-        >
-          <MKTypography variant="h2" fontWeight="bold">
-            View our Doctors
-          </MKTypography>
-          <MKTypography variant="body1" color="text">
-            We have multiple options of doctors in different specialities to choose from just for
-            you.
-          </MKTypography>
-        </Grid>
-      </Container>
-      <Container sx={{ mt: 6 }}>{renderData} </Container>
-    </MKBox>
+    <>
+      <DefaultNavbar routes={routesNavbar} />
+      <MKBox component="section" my={6} py={6}>
+        <Container>
+          <Grid
+            container
+            item
+            xs={12}
+            lg={6}
+            flexDirection="column"
+            alignItems="center"
+            sx={{ textAlign: "center", my: 6, mx: "auto", px: 0.75, marginTop: "100px" }}
+          >
+            <MKTypography variant="h2" fontWeight="bold">
+              View our Doctors
+            </MKTypography>
+            <MKTypography variant="body1" color="text">
+              We have multiple options of doctors in different specialities to choose from just for
+              you.
+            </MKTypography>
+          </Grid>
+        </Container>
+        <Container sx={{ mt: 6 }}>{renderData} </Container>
+      </MKBox>
+    </>
   );
 }
-export default DesignBlocks;
+export default Speciality;

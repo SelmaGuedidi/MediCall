@@ -14,7 +14,7 @@ Coded by www.creative-tim.com
 */
 
 // react-router-dom components
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 // @mui material components
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
@@ -35,6 +35,8 @@ import routesNavbar from "../../../routesNavbar";
 import DefaultNavbar from "../../../examples/Navbars/DefaultNavbar";
 
 function Speciality() {
+  const location = useLocation();
+  const { namespeciality } = location.state;
   const [speciality, seSpecialities] = useState([]);
   const client = axios.create({
     baseURL: "http://localhost:3001/speciality",
@@ -46,56 +48,45 @@ function Speciality() {
     };
     fetchSeciality();
   }, []);
-  const renderData = speciality.map(({ name, doctors }) => (
-    <Grid container spacing={3} sx={{ mb: 10 }} key={name}>
-      <Grid item xs={12} lg={3}>
-        <MKBox position="sticky" top="100px" pb={{ xs: 2, lg: 6 }}>
-          <Link to="/pages/authentication/sign-out">
+  const renderData = speciality.map(({ name, doctors, id }) =>
+    namespeciality === name ? (
+      <Grid container spacing={3} sx={{ mb: 10 }} key={name}>
+        <Grid item xs={12} lg={3}>
+          <MKBox position="sticky" top="100px" pb={{ xs: 2, lg: 6 }}>
             <MKTypography variant="h3" fontWeight="bold" mb={1}>
               {name.charAt(0).toUpperCase() + name.slice(1)}
             </MKTypography>
-          </Link>
-        </MKBox>
-      </Grid>
-      <Grid item xs={12} lg={9}>
-        <Grid container spacing={3}>
-          {doctors.map(({ image, firstname, lastname, id }) => (
-            <Grid item xs={12} md={4} sx={{ mb: 2 }} key={name}>
-              <Link to="/pages/landing-pages/Profile" state={{ id: id, speciality: name }}>
-                <ExampleCard image={image} name={firstname} lastname={lastname} />
-              </Link>
-            </Grid>
-          ))}
+          </MKBox>
+        </Grid>
+        <Grid item xs={12} lg={9}>
+          <Grid container spacing={3}>
+            {doctors.map(({ image, firstname, lastname, id }) => (
+              <Grid item xs={12} md={4} sx={{ mb: 2 }} key={id}>
+                <Link
+                  to={{ pathname: "/pages/landing-pages/Profile", state: { id, speciality: name } }}
+                >
+                  <ExampleCard image={image} name={firstname} lastname={lastname} />
+                </Link>
+              </Grid>
+            ))}
+          </Grid>
         </Grid>
       </Grid>
-    </Grid>
-  ));
+    ) : (
+      <Grid key={id}></Grid>
+    )
+  );
 
   return (
     <>
       <DefaultNavbar routes={routesNavbar} />
-      <MKBox component="section" my={6} py={6}>
+      <Grid component="section" my={6} py={6}>
         <Container>
-          <Grid
-            container
-            item
-            xs={12}
-            lg={6}
-            flexDirection="column"
-            alignItems="center"
-            sx={{ textAlign: "center", my: 6, mx: "auto", px: 0.75, marginTop: "100px" }}
-          >
-            <MKTypography variant="h2" fontWeight="bold">
-              View our Doctors
-            </MKTypography>
-            <MKTypography variant="body1" color="text">
-              We have multiple options of doctors in different specialities to choose from just for
-              you.
-            </MKTypography>
+          <Grid container item sx={{ marginTop: "100px" }}>
+            <Container sx={{ mt: 6 }}>{renderData} </Container>
           </Grid>
         </Container>
-        <Container sx={{ mt: 6 }}>{renderData} </Container>
-      </MKBox>
+      </Grid>
     </>
   );
 }

@@ -44,11 +44,11 @@ function DesignBlocks() {
     };
     fetchSeciality();
   }, []);
-  const renderData = speciality.map(({ name, doctors, id }) => (
+  const renderData = speciality.map(({ name, doctors }) => (
     <Grid container spacing={3} sx={{ mb: 10 }} key={name}>
       <Grid item xs={12} lg={3}>
         <MKBox position="sticky" top="100px" pb={{ xs: 2, lg: 6 }}>
-          <Link to="/pages/landing-pages/speciality" state={{ id: id, speciality: name }}>
+          <Link to="/pages/landing-pages/speciality" state={{ namespeciality: name }}>
             <MKTypography variant="h3" fontWeight="bold" mb={1}>
               {name.charAt(0).toUpperCase() + name.slice(1)}
             </MKTypography>

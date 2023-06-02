@@ -59,6 +59,7 @@ import Agora from "./pages/LandingPages/Agora";
 import RequestAppointment from "./pages/LandingPages/RequestAppointment";
 import SignOut from "./layouts/pages/authentication/sign-out";
 import AboutUs from "./pages/LandingPages/AboutUs";
+import ProfileUser from "./pages/LandingPages/ProfileUser";
 
 const routes = [
   {
@@ -79,6 +80,11 @@ const routes = [
         name: "sign out",
         route: "/pages/authentication/sign-out",
         component: <SignOut />,
+      },
+      {
+        name: "Profile",
+        route: "/pages/landing-pages/profile-user",
+        component: <ProfileUser />,
       },
     ],
   },
